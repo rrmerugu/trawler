@@ -1,4 +1,3 @@
-import contextlib
 import selenium.webdriver as webdriver
 import lxml
 import lxml.html

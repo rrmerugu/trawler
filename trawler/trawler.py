@@ -1,4 +1,4 @@
-from browsers import BrowseBing, BrowseStackOverFlow
+from .browsers import BrowseBing, BrowseStackOverFlow
 import selenium.webdriver as webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
