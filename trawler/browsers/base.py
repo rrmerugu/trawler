@@ -86,7 +86,6 @@ class BrowserBase(object):
         
     def get_html(self, method=None):
         if method is None:  method = self.get_current_method()
-        print "909090090900", method
         if method == 'selenium':  return self.get_html_selenium()
         else: raise exceptions.BrowerScrapeMethodNotImplemented('Not implemented')
         
