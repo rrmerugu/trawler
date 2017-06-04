@@ -13,6 +13,6 @@ setup(
     license='',
     author='Ravi RT Merugu',
     author_email='rrmerugu@gmail.com',
-    description='A data gathering framework to search and get information from search engines like Bing',
+    description='A data gathering framework to search and get information from web sources',
     install_requires=dependencies
 )

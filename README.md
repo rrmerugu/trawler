@@ -5,7 +5,7 @@
 [![codecov](https://codecov.io/gh/invaana/trawler/branch/master/graph/badge.svg)](https://codecov.io/gh/invaana/trawler)
 
 
-This is very light weight data gathering framework to search and gather information from sites like Bing, 
+This is very light weight data gathering framework to search and gather information from web sources like Bing, 
 Stackoverflow and etc. 
 
 ## Installation and Configuration
