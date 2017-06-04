@@ -31,7 +31,7 @@ pip install -r requirements/requirements.txt
 
 from trawler import TrawlIt
 
-scout = TrawlIt(kw="MongoDB", generate_kws=True, save=False)
+scout = TrawlIt(kw="MongoDB", generate_kws=True)
 scout.generated_keywords # ['learning MongoDB', 'Programming with MongoDB', 'MongoDB tutorials' ] 
 scout.run() # this will gather data from all generated keywords and saves it to MongoDB
 
