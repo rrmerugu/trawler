@@ -1,6 +1,5 @@
 from .browsers import BrowseBing, BrowseStackOverFlow
-import selenium.webdriver as webdriver
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from .browsers.utils import start_browser
 
 
 class TrawlIt(object):
@@ -29,12 +28,16 @@ class TrawlIt(object):
     _PREFIXES = ['learning', 'Programming with']
     _AVAILABLE_BROWSERS = ['bing', 'stackoverflow']
     
-    def __init__(self, kw=None, browser='bing', max_pages=3,
+    def __init__(self, kw=None,
+                 browser='bing',
+                 max_pages=3,
+                 method="selenium-chrome",
                  generate_kws=False,
                  prefixes=_PREFIXES,
                  suffixes=_SUFFIXES):
         self._KEYWORD = kw
         self._BROWSER = browser
+        self._SCRAPE_METHOD = method
         self._NOW_KEYWORD = kw
         self._MAX_PAGES = max_pages
         self._GENERATE_KWS = generate_kws
@@ -71,8 +74,7 @@ class TrawlIt(object):
         return self._DATA
     
     def _init_browser_instance(self):
-        self._DRIVER = webdriver.Remote(command_executor='http://127.0.0.1:4444/wd/hub',
-                                        desired_capabilities=DesiredCapabilities.CHROME)
+        self._DRIVER = start_browser(self._SCRAPE_METHOD)
     
     def _generate_keywords(self):
         keywords = []

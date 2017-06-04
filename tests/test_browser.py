@@ -32,8 +32,8 @@ def test_browser_no_nextpage():
 
 
 def test_browser_implamentation_error():
-    bing = BrowseBing(kw="Hello", max_page=1, method="chromejjj")
     with pytest.raises(BrowerScrapeMethodNotImplemented) as excinfo:
+        bing = BrowseBing(kw="Hello", max_page=1, method="chromejjj")
         bing.search()
+        bing.close()
     assert "Not implemented" in str(excinfo)
-    bing.close()

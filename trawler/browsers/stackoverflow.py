@@ -12,7 +12,7 @@ class BrowseStackOverFlow(BrowserBase):
         stack.data # returns the data
     
     """
-    def __init__(self, kw=None, max_page=1, method='selenium', driver=None):
+    def __init__(self, kw=None, max_page=1, method='selenium-chrome', driver=None):
         super(BrowseStackOverFlow, self).__init__(kw=kw, max_page=max_page, method=method, driver=driver)
 
         self._BASE_URL = 'https://stackoverflow.com'

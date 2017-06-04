@@ -12,7 +12,7 @@ class BrowseBing(BrowserBase):
         bing.data # returns the data
     
     """
-    def __init__(self, kw=None, max_page=3, method='selenium', driver=None):
+    def __init__(self, kw=None, max_page=3, method='selenium-chrome', driver=None):
         super(BrowseBing, self).__init__(kw=kw, max_page=max_page, method=method, driver=driver)
 
         self._BASE_URL = 'https://www.bing.com'

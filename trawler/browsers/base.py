@@ -3,6 +3,7 @@ import lxml
 import lxml.html
 from . import exceptions
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from .utils import start_browser
 import logging
 
 
@@ -14,17 +15,16 @@ class BrowserBase(object):
     USAGE:
         _BASE_URL : https://www.bing.com # this should be changed for each Child class
         _PHANTOMJS_PATH : #phantomjs binary path
-        _DEFAULT_METHOD : #default method used to scrape ? selenium or python requests
+        _DEFAULT_METHOD : #default method used to scrape ? selenium-chrome or selenium-htmlunit
         
     """
 
-    def __init__(self, kw=None, max_page=None, method=None, driver=None):
+    def __init__(self, kw=None, max_page=None, method='selenium-chrome', driver=None):
         """
         Make some quick calculations to proceed with the run
         """
 
-        self._AVAILABLE_SCRAPE_METHODS = ['selenium']
-        self._DEFAULT_SCRAPE_METHOD = self._AVAILABLE_SCRAPE_METHODS[0]
+        self._AVAILABLE_SCRAPE_METHODS = ['selenium-htmlunit', 'selenium-chrome', ]
 
         self._BASE_URL = None
         self._SEARCH_QS = None
@@ -51,13 +51,15 @@ class BrowserBase(object):
         if max_page:
             self._ITER_MAX = max_page
             
-        if method:
-            self._DEFAULT_SCRAPE_METHOD = method
+        self._DEFAULT_SCRAPE_METHOD = method
 
         if driver is None:
             self._init_browser_instance()
         else:
             self._DRIVER = driver
+        
+        if self._DEFAULT_SCRAPE_METHOD not in ['selenium-htmlunit', 'selenium-chrome']:
+            raise exceptions.BrowerScrapeMethodNotImplemented('Not implemented')
 
     def _test_config(self):
         """
@@ -70,8 +72,7 @@ class BrowserBase(object):
          return lxml.html.fromstring(self._HTML_DATA)
     
     def _init_browser_instance(self):
-        self._DRIVER = webdriver.Remote(command_executor='http://127.0.0.1:4444/wd/hub',
-                                        desired_capabilities=DesiredCapabilities.CHROME)
+        self._DRIVER = start_browser(self._DEFAULT_SCRAPE_METHOD)
     
     def get_html_selenium(self):
         """
@@ -86,8 +87,7 @@ class BrowserBase(object):
         
     def get_html(self, method=None):
         if method is None:  method = self.get_current_method()
-        if method == 'selenium':  return self.get_html_selenium()
-        else: raise exceptions.BrowerScrapeMethodNotImplemented('Not implemented')
+        if method in ['selenium-htmlunit', 'selenium-chrome', ]:  return self.get_html_selenium()
         
     def dry_run(self):
         """
