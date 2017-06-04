@@ -1,7 +1,7 @@
 sudo: true
 
-
 language: python
+
 python:
    - "2.7"
 
@@ -29,5 +29,6 @@ install:
    - pip install codecov
 
 script:
+   - tox --version
    - tox
    - if [ ${TRAVIS} ]; then  codecov -t "3b413829-7cdf-4b5b-bf27-4490977b5cca";  fi
