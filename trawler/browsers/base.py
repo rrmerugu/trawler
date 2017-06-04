@@ -25,7 +25,7 @@ class BrowserBase(object):
         """
 
         self._AVAILABLE_SCRAPE_METHODS = ['selenium']
-        self._DEFAULT_SCRAPE_METHOD = "selenium"
+        self._DEFAULT_SCRAPE_METHOD = self._AVAILABLE_SCRAPE_METHODS[0]
 
         self._BASE_URL = None
         self._SEARCH_QS = None
@@ -51,10 +51,10 @@ class BrowserBase(object):
         
         if max_page:
             self._ITER_MAX = max_page
-        
+            
         if method:
             self._DEFAULT_SCRAPE_METHOD = method
-            
+
         if driver is None:
             self._init_browser_instance()
         else:
@@ -86,12 +86,10 @@ class BrowserBase(object):
         return self._DRIVER.page_source
         
     def get_html(self, method=None):
-        if method is None:
-            method = self.get_current_method()
-        if method == 'selenium':
-            return self.get_html_selenium()
-        else:
-            raise exceptions.BrowerScrapeMethodNotImplemented('Not implemented')
+        if method is None:  method = self.get_current_method()
+        print "909090090900", method
+        if method == 'selenium':  return self.get_html_selenium()
+        else: raise exceptions.BrowerScrapeMethodNotImplemented('Not implemented')
         
     def dry_run(self):
         """

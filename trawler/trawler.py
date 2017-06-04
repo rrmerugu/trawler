@@ -67,7 +67,6 @@ class TrawlIt(object):
         
     @property
     def data(self):
-        self.stop()
         return self._DATA
     
     def _init_browser_instance(self):

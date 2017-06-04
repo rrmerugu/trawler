@@ -10,6 +10,7 @@ def test_browse_with_bing():
     assert type(result) is dict
     assert "results" in result
     assert "related_keywords" in result
+    bing.close()
 
 
 def test_browser_with_stackoverflow():
@@ -19,6 +20,7 @@ def test_browser_with_stackoverflow():
     assert type(result) is dict
     assert "results" in result
     assert "related_keywords" in result
+    stack.close()
     
 
 def test_browser_no_nextpage():
@@ -26,6 +28,7 @@ def test_browser_no_nextpage():
     bing.search()
     result = bing.data
     assert result['next_url'] is None
+    bing.close()
 
 
 def test_browser_implamentation_error():
