@@ -1,7 +1,7 @@
 from .base import BrowserBase
 
 
-class BrowseStackoverFlow(BrowserBase):
+class BrowseStackOverFlow(BrowserBase):
     """
     Does the browsing tasks on stackoverflow.com
     
@@ -13,7 +13,7 @@ class BrowseStackoverFlow(BrowserBase):
     
     """
     def __init__(self, kw=None, max_page=1, method=None, driver=None):
-        super(BrowseStackoverFlow, self).__init__(kw=kw, max_page=max_page, method=method, driver=driver)
+        super(BrowseStackOverFlow, self).__init__(kw=kw, max_page=max_page, method=method, driver=driver)
 
         self._BASE_URL = 'https://stackoverflow.com'
         self._SEARCH_QS = '/search?q='

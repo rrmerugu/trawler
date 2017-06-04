@@ -1,4 +1,4 @@
-from browsers import BrowseBing, BrowseStackoverFlow
+from browsers import BrowseBing, BrowseStackOverFlow
 import selenium.webdriver as webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
@@ -90,7 +90,7 @@ class TrawlIt(object):
         if self._BROWSER == 'bing':
             browser = BrowseBing(kw=kw, max_page=self._MAX_PAGES, driver=self._DRIVER)
         if self._BROWSER == 'stackoverflow':
-            browser = BrowseStackoverFlow(kw=kw, max_page=self._MAX_PAGES, driver=self._DRIVER)
+            browser = BrowseStackOverFlow(kw=kw, max_page=self._MAX_PAGES, driver=self._DRIVER)
         else:
             raise NotImplementedError("Only bing search is implemented at this moment, contact author for more info")
         browser.search()
