@@ -5,20 +5,16 @@
 [![codecov](https://codecov.io/gh/invaana/trawler/branch/master/graph/badge.svg)](https://codecov.io/gh/invaana/trawler)
 
 
-![Screenshot](docs/screenshot.png)
 
 
 
 ## Usage
 
-### Available Commands
 
 ```bash
-sh bin/start_scout_server.sh # to start the server instance, before running jobs
-sh bin/start_api.sh # to interact with the Scout instance through a web gate way. Available at http://localhost:5000
-```
+selenium-standalone start # start the server
 
-### Scripting Example
+```
 
 ```python
 

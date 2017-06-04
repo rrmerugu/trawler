@@ -5,19 +5,20 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 class TrawlIt(object):
     """
-    This will run a browser search and saves the data to the MongoDB
+    This will run a browser search and returns the data with some extra operations on top
+    of BrowseBing class
     
     USAGE:
         from trawler import TrawlIt
         
         trawl = TrawlIt(kw="MongoDB", generate_kws=True)
         trawl.generated_keywords # ['learning MongoDB', 'Programming with MongoDB', 'MongoDB tutorials' ]
-        trawl.run() # this will gather data from all generated keywords and saves it to MongoDB
+        trawl.run() # this will gather data from all generated keywords and searches all
         
         # or
         
         trawl = TrawlIt(kw="MongoDB")
-        trawl.run() # this will gather data and saves it to MongoDB
+        trawl.run() # this will gather data
         
 
     
@@ -26,7 +27,7 @@ class TrawlIt(object):
     _SUFFIXES = [ 'tutorials', ]
     _PREFIXES = [ 'learning', 'Programming with' ]
     
-    def __init__(self, kw=None, browser='bing', max_pages=3, save=True,
+    def __init__(self, kw=None, browser='bing', max_pages=3,
                  generate_kws=False,
                  prefixes=_PREFIXES,
                  suffixes=_SUFFIXES):
@@ -34,7 +35,6 @@ class TrawlIt(object):
         self._BROWSER = browser
         self._NOW_KEYWORD = kw
         self._MAX_PAGES = max_pages
-        self._SAVE = save
         self._GENERATE_KWS = generate_kws
         self._GENERATED_KEYWORDS = []
         self._DATA = {
