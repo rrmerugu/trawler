@@ -54,11 +54,15 @@ class TrawlIt(object):
     @property
     def generated_keywords(self):
         if len(self._GENERATED_KEYWORDS) == 0:
-            self._GENERATED_KEYWORDS = self._generate_keywords()
+            if self._GENERATE_KWS:
+                self._GENERATED_KEYWORDS = self._generate_keywords()
+            else:
+                self._GENERATED_KEYWORDS = [self._KEYWORD]
         return self._GENERATED_KEYWORDS
         
     @property
     def data(self):
+        self.stop()
         return self._DATA
     
     def _init_browser_instance(self):
@@ -101,8 +105,8 @@ class TrawlIt(object):
         :return:
         
         """
+        self._GENERATED_KEYWORDS = self.generated_keywords
         if self._GENERATE_KWS:
-            self._GENERATED_KEYWORDS = self.generated_keywords
             print "Generated %s keywords for [%s] " %(len(self._GENERATED_KEYWORDS), self._KEYWORD)
             for kw in self._GENERATED_KEYWORDS:
                 self._NOW_KEYWORD = kw
