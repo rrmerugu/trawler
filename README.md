@@ -12,7 +12,7 @@ Stackoverflow and etc.
 
 ```bash
 # install this package with pip
-pip install -e  git+https://github.com/invaana/trawler.git#egg=trawler
+pip install git+https://github.com/invaana/trawler.git#egg=trawler
 
 # install selenium components including drivers (you need chrome installed in your machine)
 npm install selenium-standalone@latest -g
