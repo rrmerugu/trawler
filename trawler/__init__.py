@@ -1,1 +1,1 @@
-from .trawler import TrawlIt
+from trawler.trawler import TrawlIt
