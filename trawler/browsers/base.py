@@ -163,18 +163,21 @@ class BrowserBase(object):
         """
         :return:
         """
-        el = self._SOUPED_HTML_DATA.cssselect(self._SEARCH_NEXT_CSS_SELECTOR)
-        if len(el) >= 1:
-            el = el[0]
-            return self._BASE_URL + el.get('href').strip()
+        if self._SEARCH_NEXT_CSS_SELECTOR:
+            el = self._SOUPED_HTML_DATA.cssselect(self._SEARCH_NEXT_CSS_SELECTOR)
+            if len(el) >= 1:
+                el = el[0]
+                return self._BASE_URL + el.get('href').strip()
         else:
             return None
-        
     def get_search_results(self):
         return self._scrape_css_selector(self._SEARCH_MAIN_CSS_SELECTOR)
     
     def get_related_keywords(self):
-        return self._scrape_css_selector(self._SEARCH_KEYWORDS_CSS_SELECTOR)
-
+        if self._SEARCH_KEYWORDS_CSS_SELECTOR:
+            return self._scrape_css_selector(self._SEARCH_KEYWORDS_CSS_SELECTOR)
+        else:
+            return []
+        
     def close(self):
         self._DRIVER.close()
