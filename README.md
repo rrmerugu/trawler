@@ -22,15 +22,15 @@ sh bin/start_api.sh # to interact with the Scout instance through a web gate way
 
 ```python
 
-from trawler.scout import ScoutThis
+from trawler import TrawlIt
 
-scout = ScoutThis(kw="MongoDB", generate_kws=True, save=False)
+scout = TrawlIt(kw="MongoDB", generate_kws=True, save=False)
 scout.generated_keywords # ['learning MongoDB', 'Programming with MongoDB', 'MongoDB tutorials' ] 
 scout.run() # this will gather data from all generated keywords and saves it to MongoDB
 
 # or 
 
-scout = ScoutThis(kw="MongoDB")
+scout = TrawlIt(kw="MongoDB")
 scout.run() # this will gather data and saves it to MongoDB
 
 

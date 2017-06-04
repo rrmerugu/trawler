@@ -1,0 +1,34 @@
+sudo: true
+
+
+language: python
+python:
+   - "2.7"
+
+dist: trusty
+
+addons:
+  chrome: stable
+
+before_install:
+   - export CHROME_BIN=/usr/bin/google-chrome
+   - export DISPLAY=:99.0
+   - sh -e /etc/init.d/xvfb start
+   - sudo apt-get update
+   - sudo apt-get install -y libappindicator1 fonts-liberation
+   - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+   - sudo dpkg -i google-chrome*.deb
+   - npm install selenium-standalone@latest -g
+   - selenium-standalone install
+   - selenium-standalone start  > /dev/null &
+
+cache: pip
+
+install:
+   - pip install tox-travis
+   - pip install codecov
+
+script:
+   - mongo --version
+   - tox
+   - if [ ${TRAVIS} ]; then  codecov -t "3b413829-7cdf-4b5b-bf27-4490977b5cca";  fi

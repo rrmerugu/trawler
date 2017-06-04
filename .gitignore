@@ -1,0 +1,6 @@
+venv/
+.tox
+.coverage
+trawler.egg-info
+htmlcov/
+.cache
