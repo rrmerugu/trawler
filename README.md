@@ -46,7 +46,7 @@ trawl.close() # do this or there will be an idle browser instance left on your m
 ```
 
 
-## Web Sources Support 
+## Supported Web sources
 
 Current this framework supports, automating searches with 
 
