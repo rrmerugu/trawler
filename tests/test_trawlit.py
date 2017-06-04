@@ -16,12 +16,11 @@ def test_scout():
 def test_scout_browser():
     
     scout = TrawlIt(kw="Ravi RT Merugu", max_pages=1, browser="notbinga")
-    
     with pytest.raises(NotImplementedError) as excinfo:
         scout.run()
-    assert "Only bing search is implemented at this moment" in str(excinfo)
+    assert "contact author for more info" in str(excinfo)
     
     
 def test_keyword_generation():
-    scout = TrawlIt(kw="Django", suffixes=['tutorials',], prefixes=['programming with',])
+    scout = TrawlIt(kw="Django",  suffixes=['tutorials',], prefixes=['programming with',], generate_kws=True)
     assert scout.generated_keywords == ['programming with Django', 'Django tutorials' ]

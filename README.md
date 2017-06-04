@@ -31,13 +31,13 @@ pip install -r requirements/requirements.txt
 
 from trawler import TrawlIt
 
-trawl = TrawlIt(kw="MongoDB", generate_kws=True)
+trawl = TrawlIt(kw="MongoDB", generate_kws=True, browser="bing")
 trawl.run() # this will gather data from all generated keywords and saves it to MongoDB
 trawl.generated_keywords # access the generated keywords ['learning MongoDB', 'Programming with MongoDB', 'MongoDB tutorials' ] 
 trawl.data # access the data after the run
 # or 
 
-trawl = TrawlIt(kw="MongoDB")
+trawl = TrawlIt(kw="Python Exception Error",  browser="stackoverflow")
 trawl.run() # this will gather data and saves it to MongoDB
 trawl.data # access the data after the run
 

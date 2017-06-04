@@ -26,6 +26,7 @@ class TrawlIt(object):
  
     _SUFFIXES = [ 'tutorials', ]
     _PREFIXES = [ 'learning', 'Programming with' ]
+    _AVAILABLE_BROWSERS = ['bing', 'stackoverflow']
     
     def __init__(self, kw=None, browser='bing', max_pages=3,
                  generate_kws=False,
@@ -48,6 +49,10 @@ class TrawlIt(object):
         }
         if prefixes: self._PREFIXES = prefixes
         if suffixes: self._SUFFIXES = suffixes
+        
+        if self._BROWSER not in self._AVAILABLE_BROWSERS:
+            raise NotImplementedError("Only [%s] search is implemented at this moment, "
+                                      "contact author for more info" %(",".join(self._AVAILABLE_BROWSERS)))
         
         self._init_browser_instance()
             
@@ -89,10 +94,9 @@ class TrawlIt(object):
     def _run(self, kw):
         if self._BROWSER == 'bing':
             browser = BrowseBing(kw=kw, max_page=self._MAX_PAGES, driver=self._DRIVER)
-        if self._BROWSER == 'stackoverflow':
+        elif self._BROWSER == 'stackoverflow':
             browser = BrowseStackOverFlow(kw=kw, max_page=self._MAX_PAGES, driver=self._DRIVER)
-        else:
-            raise NotImplementedError("Only bing search is implemented at this moment, contact author for more info")
+            
         browser.search()
         print "Gathered the data for keyword", kw
         self._append_data(browser.data)

@@ -48,10 +48,13 @@ class BrowserBase(object):
         self._ITER_MAX = 3
         
         self._SEARCH_TERM = kw
+        
         if max_page:
             self._ITER_MAX = max_page
+        
         if method:
             self._DEFAULT_SCRAPE_METHOD = method
+            
         if driver is None:
             self._init_browser_instance()
         else:
