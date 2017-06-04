@@ -58,7 +58,7 @@ class BrowserBase(object):
         else:
             self._DRIVER = driver
         
-        if self._DEFAULT_SCRAPE_METHOD not in ['selenium-htmlunit', 'selenium-chrome']:
+        if self._DEFAULT_SCRAPE_METHOD not in self._AVAILABLE_SCRAPE_METHODS:
             raise exceptions.BrowerScrapeMethodNotImplemented('Not implemented')
 
     def _test_config(self):
@@ -87,7 +87,7 @@ class BrowserBase(object):
         
     def get_html(self, method=None):
         if method is None:  method = self.get_current_method()
-        if method in ['selenium-htmlunit', 'selenium-chrome', ]:  return self.get_html_selenium()
+        if method in ['selenium-htmlunit', 'selenium-chrome', ]: return self.get_html_selenium()
         
     def dry_run(self):
         """
