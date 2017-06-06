@@ -71,6 +71,15 @@ class TrawlIt(object):
     
     @property
     def data(self):
+        if len(self._DATA['results']) == 0:
+            print """Hey, either no results found or make sure you ran the code with `trawl.run()`
+            
+            Example:
+                trawl = TrawlIt(kw=kw, generate_kws=True,  max_pages=10, browser="stackoverflow")
+                trawl.run() # this will do the actual run
+                trawl.data # you can access the data here
+                trawl.stop() # this close the browser instance
+            """
         return self._DATA
     
     def _init_browser_instance(self):
@@ -101,6 +110,7 @@ class TrawlIt(object):
         
         browser.search()
         print "Gathered the data for keyword", kw
+        print browser.data
         self._append_data(browser.data)
     
     def run(self):
