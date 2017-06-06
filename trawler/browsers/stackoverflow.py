@@ -17,7 +17,7 @@ class BrowseStackOverFlow(BrowserBase):
 
         self._BASE_URL = 'https://stackoverflow.com'
         self._SEARCH_QS = '/search?q='
-        self._SEARCH_MAIN_CSS_SELECTOR = '.result-link a'
+        self._SEARCH_MAIN_CSS_SELECTOR = '.result-link a,.summary h3 a'
         self._SEARCH_KEYWORDS_CSS_SELECTOR = None
         self._SEARCH_NEXT_QS = '&page='
         self._SEARCH_NEXT_CSS_SELECTOR = '.pager.fl a[rel="next"]'
