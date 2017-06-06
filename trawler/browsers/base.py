@@ -5,6 +5,7 @@ from . import exceptions
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from .utils import start_browser
 import logging
+import random, time
 
 
 class BrowserBase(object):
@@ -30,6 +31,7 @@ class BrowserBase(object):
         self._SEARCH_QS = None
         self._SEARCH_TERM = None
         self._SEARCH_URL = None
+        self._PAUSE_RUN_RANDOMLY = lambda: random.randint(1, 4)
 
         self._HTML_DATA = None
         self._SOUPED_HTML_DATA = None
@@ -60,7 +62,7 @@ class BrowserBase(object):
         
         if self._DEFAULT_SCRAPE_METHOD not in self._AVAILABLE_SCRAPE_METHODS:
             raise exceptions.BrowerScrapeMethodNotImplemented('Not implemented')
-
+        
     def _test_config(self):
         """
         this will check the inputs and executables being in place
@@ -131,6 +133,7 @@ class BrowserBase(object):
         
         if self._NEXT_PAGE_URL and self._ITER < self._ITER_MAX:
             self._ITER += 1
+            time.sleep(self._PAUSE_RUN_RANDOMLY())
             self.search()
         
     @property
@@ -169,6 +172,7 @@ class BrowserBase(object):
                 return self._BASE_URL + el.get('href').strip()
         else:
             return None
+        
     def get_search_results(self):
         return self._scrape_css_selector(self._SEARCH_MAIN_CSS_SELECTOR)
     
