@@ -1,4 +1,4 @@
-from trawler.browsers import BrowseBing, BrowseStackOverFlow
+from trawler.browsers import BrowseBing, BrowseStackOverFlow, BrowseStackOverFlowDocumentation
 from trawler.browsers.exceptions import BrowerScrapeMethodNotImplemented
 import pytest
 
@@ -23,6 +23,16 @@ def test_browser_with_stackoverflow():
     stack.close()
     
 
+def test_browser_with_stackoverflow_doc():
+    doc = BrowseStackOverFlowDocumentation(kw="django")
+    doc.search()
+    result = doc.data
+    assert type(result) is dict
+    assert "results" in result
+    assert "related_keywords" in result
+    doc.close()
+    
+    
 def test_browser_no_nextpage():
     bing = BrowseBing(kw="XxXXXXXXxxxxxbas dans dsand msad asd amd ansd am dna smda sdn asdmas dm", max_page=1)
     bing.search()
@@ -37,3 +47,4 @@ def test_browser_implamentation_error():
         bing.search()
         bing.close()
     assert "Not implemented" in str(excinfo)
+
