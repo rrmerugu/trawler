@@ -33,7 +33,6 @@ class BrowserBase(object):
         self._SEARCH_URL = self._BASE_URL
         if self._SEARCH_QS: self._SEARCH_URL = self._SEARCH_URL + self._SEARCH_QS
         if self._SEARCH_TERM: self._SEARCH_URL = self._SEARCH_URL + self._SEARCH_TERM
-        print self._SEARCH_URL, "--==-=-="
         self._PAUSE_RUN_RANDOMLY = lambda: random.randint(1, 4)
 
         self._HTML_DATA = None
