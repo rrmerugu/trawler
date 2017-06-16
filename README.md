@@ -43,6 +43,13 @@ trawl.run() # this will gather data and saves it to MongoDB
 trawl.data # access the data after the run
 trawl.close() # do this or there will be an idle browser instance left on your machine
 
+
+
+trawl = TrawlIt(kw="django",  browser="stackoverflow-doc")
+trawl.run() # this will gather the topics from the stackoverflow documentation
+trawl.data # access the data after the run
+trawl.close() # do this or there will be an idle browser instance left on your machine
+
 ```
 
 
