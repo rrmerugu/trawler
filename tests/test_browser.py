@@ -7,6 +7,7 @@ def test_browse_with_bing():
     bing = BrowseBing(kw="Ravi RT Merugu", max_page=1)
     bing.search()
     result = bing.data
+    assert "selenium-htmlunit" == bing.shift_method()
     assert type(result) is dict
     assert "results" in result
     assert "related_keywords" in result

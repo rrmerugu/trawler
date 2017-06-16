@@ -116,7 +116,7 @@ class BrowserBase(object):
         :return:
         """
         index = self._AVAILABLE_SCRAPE_METHODS.index(self._DEFAULT_SCRAPE_METHOD)
-        self._DEFAULT_SCRAPE_METHOD = self._AVAILABLE_SCRAPE_METHODS[index+1]
+        return self._AVAILABLE_SCRAPE_METHODS[index-1]
     
     def search(self):
         """
