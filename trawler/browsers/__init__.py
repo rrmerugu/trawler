@@ -1,2 +1,2 @@
 from .bing import BrowseBing
-from .stackoverflow import BrowseStackOverFlow
+from .stackoverflow import BrowseStackOverFlow, BrowseStackOverFlowDocumentation

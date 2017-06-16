@@ -30,7 +30,10 @@ class BrowserBase(object):
         self._BASE_URL = None
         self._SEARCH_QS = None
         self._SEARCH_TERM = None
-        self._SEARCH_URL = None
+        self._SEARCH_URL = self._BASE_URL
+        if self._SEARCH_QS: self._SEARCH_URL = self._SEARCH_URL + self._SEARCH_QS
+        if self._SEARCH_TERM: self._SEARCH_URL = self._SEARCH_URL + self._SEARCH_TERM
+        print self._SEARCH_URL, "--==-=-="
         self._PAUSE_RUN_RANDOMLY = lambda: random.randint(1, 4)
 
         self._HTML_DATA = None
@@ -121,8 +124,7 @@ class BrowserBase(object):
          2. shift _DEFAULT_SCRAPE_METHOD if needed
          3. get results
          """
-        if self._ITER == 0:
-            self._SEARCH_URL = self._BASE_URL + self._SEARCH_QS + self._SEARCH_TERM
+ 
         self.dry_run()
         self._test_config()
         self._HTML_DATA = self.get_html()

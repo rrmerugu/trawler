@@ -1,4 +1,4 @@
-from .browsers import BrowseBing, BrowseStackOverFlow
+from .browsers import BrowseBing, BrowseStackOverFlow, BrowseStackOverFlowDocumentation
 from .browsers.utils import start_browser
 
 
@@ -26,7 +26,7 @@ class TrawlIt(object):
     
     _SUFFIXES = ['tutorials', ]
     _PREFIXES = ['learning', 'Programming with']
-    _AVAILABLE_BROWSERS = ['bing', 'stackoverflow']
+    _AVAILABLE_BROWSERS = ['bing', 'stackoverflow', 'stackoverflow-doc',]
     
     def __init__(self, kw=None,
                  browser='bing',
@@ -107,6 +107,8 @@ class TrawlIt(object):
             browser = BrowseBing(kw=kw, max_page=self._MAX_PAGES, driver=self._DRIVER)
         elif self._BROWSER == 'stackoverflow':
             browser = BrowseStackOverFlow(kw=kw, max_page=self._MAX_PAGES, driver=self._DRIVER)
+        elif self._BROWSER == 'stackoverflow-doc':
+            browser = BrowseStackOverFlowDocumentation(kw=kw, max_page=self._MAX_PAGES, driver=self._DRIVER)
         
         browser.search()
         print "Gathered the data for keyword", kw

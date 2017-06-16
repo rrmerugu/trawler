@@ -27,3 +27,5 @@ def test_keyword_generation():
     assert 'programming with Django' in trawl.generated_keywords
     assert 'Django tutorials' in trawl.generated_keywords
     trawl.stop()
+    
+

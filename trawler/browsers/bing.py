@@ -22,3 +22,4 @@ class BrowseBing(BrowserBase):
         self._SEARCH_NEXT_QS = '&first='
         self._SEARCH_NEXT_CSS_SELECTOR = 'a.sb_pagN'
         self._DEFAULT_SCRAPE_METHOD = method
+        self._SEARCH_URL = self._BASE_URL + self._SEARCH_QS + kw
