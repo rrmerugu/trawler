@@ -35,20 +35,20 @@ trawl = TrawlIt(kw="MongoDB", generate_kws=True, browser="bing")
 trawl.run() # this will gather data from all generated keywords and saves it to MongoDB
 trawl.generated_keywords # access the generated keywords ['learning MongoDB', 'Programming with MongoDB', 'MongoDB tutorials' ] 
 trawl.data # access the data after the run
-trawl.close() # do this or there will be an idle browser instance left on your machine
+trawl.stop() # do this or there will be an idle browser instance left on your machine
 # or 
 
 trawl = TrawlIt(kw="Python Exception Error",  browser="stackoverflow")
 trawl.run() # this will gather data and saves it to MongoDB
 trawl.data # access the data after the run
-trawl.close() # do this or there will be an idle browser instance left on your machine
+trawl.stop() # do this or there will be an idle browser instance left on your machine
 
 
 
 trawl = TrawlIt(kw="django",  browser="stackoverflow-doc")
 trawl.run() # this will gather the topics from the stackoverflow documentation
 trawl.data # access the data after the run
-trawl.close() # do this or there will be an idle browser instance left on your machine
+trawl.stop() # do this or there will be an idle browser instance left on your machine
 
 ```
 
