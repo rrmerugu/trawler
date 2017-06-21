@@ -50,6 +50,19 @@ trawl.run() # this will gather the topics from the stackoverflow documentation
 trawl.data # access the data after the run
 trawl.stop() # do this or there will be an idle browser instance left on your machine
 
+
+
+trawl = TrawlIt(kw="django",  browser="wordpress")
+trawl.run() # this will gather the topics from the stackoverflow documentation
+trawl.data # access the data after the run
+trawl.stop() # do this or there will be an idle browser instance left on your machine
+
+from trawler.browsers.wordpress import BrowseWordPress
+stack = BrowseWordPress( max_page=1, base_url="http://econbrowser.com/")
+# stack = BrowseWordPress(kw="invaana", max_page=1, base_url="http://econbrowser.com")
+stack.search()
+stack.data # returns the data
+
 ```
 
 
@@ -59,3 +72,5 @@ Current this framework supports, automating searches with
 
 - bing
 - StackOverFlow
+- StackOverFlow Documentation
+- Wordpress

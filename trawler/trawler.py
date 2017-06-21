@@ -1,4 +1,4 @@
-from .browsers import BrowseBing, BrowseStackOverFlow, BrowseStackOverFlowDocumentation
+from .browsers import BrowseBing, BrowseStackOverFlow, BrowseStackOverFlowDocumentation, BrowseWordPress
 from .browsers.utils import start_browser
 
 
@@ -32,9 +32,12 @@ class TrawlIt(object):
                  browser='bing',
                  max_pages=3,
                  method="selenium-chrome",
+                 page_url=None,
                  generate_kws=False,
                  prefixes=_PREFIXES,
-                 suffixes=_SUFFIXES):
+                 suffixes=_SUFFIXES, **kwargs):
+        
+        self._BASE_URL = page_url
         self._KEYWORD = kw
         self._BROWSER = browser
         self._SCRAPE_METHOD = method
@@ -109,6 +112,8 @@ class TrawlIt(object):
             browser = BrowseStackOverFlow(kw=kw, max_page=self._MAX_PAGES, driver=self._DRIVER)
         elif self._BROWSER == 'stackoverflow-doc':
             browser = BrowseStackOverFlowDocumentation(kw=kw, max_page=self._MAX_PAGES, driver=self._DRIVER)
+        elif self._BROWSER == 'wordpress':
+            browser = BrowseWordPress(kw=kw, max_page=self._MAX_PAGES, driver=self._DRIVER, base_url=self._BASE_URL)
         
         browser.search()
         print "Gathered the data for keyword", kw

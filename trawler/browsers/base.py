@@ -170,7 +170,10 @@ class BrowserBase(object):
             el = self._SOUPED_HTML_DATA.cssselect(self._SEARCH_NEXT_CSS_SELECTOR)
             if len(el) >= 1:
                 el = el[0]
-                return self._BASE_URL + el.get('href').strip()
+                href = el.get('href').strip()
+                if "http://" in href  or "https://" in href:
+                    return href
+                return self._BASE_URL + href
         else:
             return None
         
