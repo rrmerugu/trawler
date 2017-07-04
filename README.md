@@ -11,7 +11,11 @@ Stackoverflow and etc.
 ## Installation and Configuration
 
 ```bash
-# install this package with pip
+
+# install this package from PyPi
+pip install trawler
+
+# or for latest code
 pip install git+https://github.com/invaana/trawler.git#egg=trawler
 
 # install selenium components including drivers (you need chrome installed in your machine)
