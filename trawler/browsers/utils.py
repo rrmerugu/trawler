@@ -12,5 +12,4 @@ def start_browser(scrape_method):
                                 desired_capabilities=DesiredCapabilities.CHROME)
     
     else:
-        return webdriver.Remote(command_executor='http://127.0.0.1:4444/wd/hub',
-                                desired_capabilities=DesiredCapabilities.HTMLUNITWITHJS)
+        raise Exception("Not implemented")

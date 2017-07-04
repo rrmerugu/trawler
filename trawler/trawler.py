@@ -1,6 +1,6 @@
 from .browsers import BrowseBing, BrowseStackOverFlow, BrowseStackOverFlowDocumentation, BrowseWordPress
 from .browsers.utils import start_browser
-
+from .settings import AVAILABLE_METHODS, AVAILABLE_SELENIUM_METHODS
 
 class TrawlIt(object):
     """
@@ -27,6 +27,7 @@ class TrawlIt(object):
     _SUFFIXES = ['tutorials', ]
     _PREFIXES = ['learning', 'Programming with']
     _AVAILABLE_BROWSERS = ['bing', 'stackoverflow', 'stackoverflow-doc',]
+    _AVAILABLE_METHODS = AVAILABLE_METHODS
     
     def __init__(self, kw=None,
                  browser='bing',
@@ -61,8 +62,11 @@ class TrawlIt(object):
             raise NotImplementedError("Only [%s] search is implemented at this moment, "
                                       "contact author for more info" % (",".join(self._AVAILABLE_BROWSERS)))
         
-        self._init_browser_instance()
-    
+        if self._SCRAPE_METHOD in AVAILABLE_SELENIUM_METHODS:
+            self._init_browser_instance()
+        else:
+            self._DRIVER = None
+            
     @property
     def generated_keywords(self):
         if len(self._GENERATED_KEYWORDS) == 0:
@@ -106,14 +110,18 @@ class TrawlIt(object):
         self._DATA['search_kw_generated'] = self.generated_keywords
     
     def _run(self, kw):
+        if self._DRIVER:
+            browser_kwargs = {'driver': self._DRIVER}
+        else:
+            browser_kwargs = {}
         if self._BROWSER == 'bing':
-            browser = BrowseBing(kw=kw, max_page=self._MAX_PAGES, driver=self._DRIVER)
+            browser = BrowseBing(kw=kw, max_page=self._MAX_PAGES, method=self._SCRAPE_METHOD, **browser_kwargs)
         elif self._BROWSER == 'stackoverflow':
-            browser = BrowseStackOverFlow(kw=kw, max_page=self._MAX_PAGES, driver=self._DRIVER)
+            browser = BrowseStackOverFlow(kw=kw, max_page=self._MAX_PAGES, method=self._SCRAPE_METHOD, **browser_kwargs)
         elif self._BROWSER == 'stackoverflow-doc':
-            browser = BrowseStackOverFlowDocumentation(kw=kw, max_page=self._MAX_PAGES, driver=self._DRIVER)
+            browser = BrowseStackOverFlowDocumentation(kw=kw, max_page=self._MAX_PAGES, method=self._SCRAPE_METHOD, **browser_kwargs)
         elif self._BROWSER == 'wordpress':
-            browser = BrowseWordPress(kw=kw, max_page=self._MAX_PAGES, driver=self._DRIVER, base_url=self._BASE_URL)
+            browser = BrowseWordPress(kw=kw, max_page=self._MAX_PAGES, base_url=self._BASE_URL, method=self._SCRAPE_METHOD, **browser_kwargs)
         
         browser.search()
         print "Gathered the data for keyword", kw
@@ -140,4 +148,5 @@ class TrawlIt(object):
             self._run(self._NOW_KEYWORD)
     
     def stop(self):
-        self._DRIVER.close()
+        if self._DRIVER:
+            self._DRIVER.close()

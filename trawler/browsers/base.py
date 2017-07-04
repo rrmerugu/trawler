@@ -1,12 +1,13 @@
 import selenium.webdriver as webdriver
 import lxml
 import lxml.html
+import requests
 from . import exceptions
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from .utils import start_browser
 import logging
 import random, time
-
+from trawler.settings import AVAILABLE_METHODS
 
 class BrowserBase(object):
     """
@@ -25,7 +26,7 @@ class BrowserBase(object):
         Make some quick calculations to proceed with the run
         """
 
-        self._AVAILABLE_SCRAPE_METHODS = ['selenium-htmlunit', 'selenium-chrome', ]
+        self._AVAILABLE_SCRAPE_METHODS = AVAILABLE_METHODS
 
         self._BASE_URL = None
         self._SEARCH_QS = None
@@ -56,12 +57,14 @@ class BrowserBase(object):
             self._ITER_MAX = max_page
             
         self._DEFAULT_SCRAPE_METHOD = method
-
-        if driver is None:
-            self._init_browser_instance()
+        if self._DEFAULT_SCRAPE_METHOD in ['selenium-htmlunit', 'selenium-chrome',]:
+            if driver is None:
+                self._init_browser_instance()
+            else:
+                self._DRIVER = driver
         else:
-            self._DRIVER = driver
-        
+            self._DRIVER = None
+
         if self._DEFAULT_SCRAPE_METHOD not in self._AVAILABLE_SCRAPE_METHODS:
             raise exceptions.BrowerScrapeMethodNotImplemented('Not implemented')
         
@@ -78,20 +81,46 @@ class BrowserBase(object):
     def _init_browser_instance(self):
         self._DRIVER = start_browser(self._DEFAULT_SCRAPE_METHOD)
     
-    def get_html_selenium(self):
+    def evaluate_url(self):
         """
-        https://stackoverflow.com/a/18102579/3448851
+        decide which url to scrape now
         :return:
         """
         if self._NEXT_PAGE_URL:
-            self._DRIVER.get(self._NEXT_PAGE_URL)
+            return self._NEXT_PAGE_URL
         else:
-            self._DRIVER.get(self._SEARCH_URL)
+            return self._SEARCH_URL
+    
+    def get_html_with_selenium(self):
+        """
+        scrapes the html content using requests module
+
+        https://stackoverflow.com/a/18102579/3448851
+        :return:
+        """
+        url = self.evaluate_url()
+        self._DRIVER.get(url)
         return self._DRIVER.page_source
+        
+    def get_html_with_requests(self):
+        """
+        scrapes the html content using requests module
+        :return:
+        """
+        url = self.evaluate_url()
+        try:
+            req = requests.get(url, timeout=10)
+            if req.status_code == 200:
+                return req.text
+            else:
+                return None
+        except:
+            return None
         
     def get_html(self, method=None):
         if method is None:  method = self.get_current_method()
-        if method in ['selenium-htmlunit', 'selenium-chrome', ]: return self.get_html_selenium()
+        if method in ['selenium-htmlunit', 'selenium-chrome', ]: return self.get_html_with_selenium()
+        if method == 'requests': return self.get_html_with_requests()
         
     def dry_run(self):
         """
@@ -187,4 +216,5 @@ class BrowserBase(object):
             return []
         
     def close(self):
-        self._DRIVER.close()
+        if self._DRIVER:
+            self._DRIVER.close()
