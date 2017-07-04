@@ -4,3 +4,4 @@ venv/
 trawler.egg-info
 htmlcov/
 .cache
+dist
