@@ -1,11 +1,11 @@
 from setuptools import setup
 
-dependencies = [p.rstrip('\n') for p in open('requirements/requirements.txt')]
+dependencies = [p.rstrip('\n') for p in open('./requirements/requirements.txt')]
 
 setup(
     name='trawler',
-    version='1.1.0',
-    packages=['trawler', 'trawler.browsers' ],
+    version='1.2.0',
+    packages=['trawler', 'trawler.browsers', 'requirements', 'tests' ],
     url='https://github.com/invaana/trawler',
     license='',
     author='Ravi RT Merugu',
