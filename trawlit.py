@@ -3,13 +3,14 @@ import argparse
 
 
 def main(kw, pages,browser):
-    print "Gathering the information with keyword: [%s]:"%kw
+    print ("Gathering the information with keyword: [%s]:"%kw)
     trawl = TrawlIt(kw=kw, generate_kws=False,  max_pages=int(pages), browser=browser)
     trawl.run()
     data = trawl.data
     print data
-    print "Found: [%s] results %s" %len(data)
+    print ("Found: [%s] results %s" %len(data))
     trawl.stop()
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

@@ -14,4 +14,5 @@ def run_tests_coverage():
     if __name__ == "__main__":
         pytest.main(PYTEST_ARGS)
 
+
 exit_on_failure(run_tests_coverage())

@@ -1,8 +1,8 @@
 # Invaana Trawler
 
 
-[![Build Status](https://travis-ci.org/invaana/trawler.svg?branch=master)](https://travis-ci.org/invaana/trawler)
-[![codecov](https://codecov.io/gh/invaana/trawler/branch/master/graph/badge.svg)](https://codecov.io/gh/invaana/trawler)
+[![Build Status](https://travis-ci.org/rrmerugu/trawler.svg?branch=master)](https://travis-ci.org/rrmerugu/trawler)
+[![codecov](https://codecov.io/gh/rrmerugu/trawler/branch/master/graph/badge.svg)](https://codecov.io/gh/rrmerugu/trawler)
 
 
 This is very light weight data gathering framework to search and gather information from web sources like Bing, 
@@ -16,7 +16,7 @@ Stackoverflow and etc.
 pip install trawler
 
 # or for latest code
-pip install git+https://github.com/invaana/trawler.git#egg=trawler
+pip install git+https://github.com/rrmerugu/trawler.git#egg=trawler
 
 # install selenium components including drivers (you need chrome installed in your machine)
 npm install selenium-standalone@latest -g

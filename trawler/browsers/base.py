@@ -9,6 +9,7 @@ import logging
 import random, time
 from trawler.settings import AVAILABLE_METHODS
 
+
 class BrowserBase(object):
     """
     Base class for making new browser classes like BingBrowser, GoogleBrowser, DuckDuckGoBrowser etc

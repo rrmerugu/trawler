@@ -1,15 +1,20 @@
 from setuptools import setup
 
-dependencies = [p.rstrip('\n') for p in open('./requirements/requirements.txt')]
+# dependencies = [p.rstrip('\n') for p in open('requirements/requirements.txt')]
 
 setup(
     name='trawler',
-    version='1.2.1',
-    packages=['trawler', 'trawler.browsers', 'requirements', 'tests' ],
+    version='1.2.2',
+    packages=['trawler', 'trawler.browsers' ],
     url='https://github.com/rrmerugu/trawler',
     license='',
     author='Ravi RT Merugu',
     author_email='rrmerugu@gmail.com',
     description='A data gathering framework to search and get information from web sources',
-    install_requires=dependencies,
+    install_requires=[
+        'cssselect==1.0.1',
+        'lxml==4.1.0',
+        'selenium==3.6.0',
+        'six==1.11.0'
+    ],
 )
