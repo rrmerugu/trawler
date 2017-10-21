@@ -4,9 +4,9 @@ dependencies = [p.rstrip('\n') for p in open('./requirements/requirements.txt')]
 
 setup(
     name='trawler',
-    version='1.2.0',
+    version='1.2.1',
     packages=['trawler', 'trawler.browsers', 'requirements', 'tests' ],
-    url='https://github.com/invaana/trawler',
+    url='https://github.com/rrmerugu/trawler',
     license='',
     author='Ravi RT Merugu',
     author_email='rrmerugu@gmail.com',
