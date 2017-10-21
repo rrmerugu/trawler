@@ -1,6 +1,8 @@
 from .browsers import BrowseBing, BrowseStackOverFlow, BrowseStackOverFlowDocumentation, BrowseWordPress
 from .browsers.utils import start_browser
 from .settings import AVAILABLE_METHODS, AVAILABLE_SELENIUM_METHODS
+import logging
+logger = logging.getLogger(__name__)
 
 class TrawlIt(object):
     """
@@ -79,14 +81,14 @@ class TrawlIt(object):
     @property
     def data(self):
         if len(self._DATA['results']) == 0:
-            print """Hey, either no results found or make sure you ran the code with `trawl.run()`
+            raise Exception("""Hey, either no results found or make sure you ran the code with `trawl.run()`
             
             Example:
                 trawl = TrawlIt(kw=kw, generate_kws=True,  max_pages=10, browser="stackoverflow")
                 trawl.run() # this will do the actual run
                 trawl.data # you can access the data here
                 trawl.stop() # this close the browser instance
-            """
+            """)
         return self._DATA
     
     def _init_browser_instance(self):
@@ -124,8 +126,7 @@ class TrawlIt(object):
             browser = BrowseWordPress(kw=kw, max_page=self._MAX_PAGES, base_url=self._BASE_URL, method=self._SCRAPE_METHOD, **browser_kwargs)
         
         browser.search()
-        print "Gathered the data for keyword", kw
-        print browser.data
+        logger.debug("Gathered the data for keyword", kw)
         self._append_data(browser.data)
     
     def run(self):
@@ -140,7 +141,7 @@ class TrawlIt(object):
         """
         self._GENERATED_KEYWORDS = self.generated_keywords
         if self._GENERATE_KWS:
-            print "Generated %s keywords for [%s] " % (len(self._GENERATED_KEYWORDS), self._KEYWORD)
+            logger.debug("Generated %s keywords for [%s] " % (len(self._GENERATED_KEYWORDS), self._KEYWORD))
             for kw in self._GENERATED_KEYWORDS:
                 self._NOW_KEYWORD = kw
                 self._run(self._NOW_KEYWORD)

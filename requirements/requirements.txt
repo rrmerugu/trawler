@@ -1,4 +1,4 @@
 cssselect==1.0.1
-lxml==3.7.3
-selenium==3.4.3
-six==1.10.0
+lxml==4.1.0
+selenium==3.6.0
+six==1.11.0

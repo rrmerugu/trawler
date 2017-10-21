@@ -24,6 +24,7 @@ class BrowseStackOverFlow(BrowserBase):
         self._DEFAULT_SCRAPE_METHOD = method
         self._SEARCH_URL = self._BASE_URL + self._SEARCH_QS + kw
 
+
 class BrowseStackOverFlowDocumentation(BrowserBase):
     def __init__(self, kw=None, max_page=1, method='selenium-chrome', driver=None):
         super(BrowseStackOverFlowDocumentation, self).__init__(kw=kw, max_page=max_page, method=method, driver=driver)
