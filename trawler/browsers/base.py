@@ -1,6 +1,7 @@
 import selenium.webdriver as webdriver
 import lxml
 import lxml.html
+from bs4 import BeautifulSoup
 import requests
 from . import exceptions
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
@@ -21,14 +22,14 @@ class BrowserBase(object):
         _DEFAULT_METHOD : #default method used to scrape ? selenium-chrome or selenium-htmlunit
         
     """
-
+    
     def __init__(self, kw=None, max_page=None, method='selenium-chrome', driver=None):
         """
         Make some quick calculations to proceed with the run
         """
-
+        
         self._AVAILABLE_SCRAPE_METHODS = AVAILABLE_METHODS
-
+        
         self._BASE_URL = None
         self._SEARCH_QS = None
         self._SEARCH_TERM = None
@@ -36,19 +37,19 @@ class BrowserBase(object):
         if self._SEARCH_QS: self._SEARCH_URL = self._SEARCH_URL + self._SEARCH_QS
         if self._SEARCH_TERM: self._SEARCH_URL = self._SEARCH_URL + self._SEARCH_TERM
         self._PAUSE_RUN_RANDOMLY = lambda: random.randint(1, 4)
-
+        
         self._HTML_DATA = None
         self._SOUPED_HTML_DATA = None
-
+        
         self._RESULTS_MAIN = []
         self._RESULTS_KEYWORDS = []
-
+        
         self._SEARCH_MAIN_CSS_SELECTOR = None
         self._SEARCH_KEYWORDS_CSS_SELECTOR = None
         self._SEARCH_NEXT_CSS_SELECTOR = None
-
+        
         self._NEXT_PAGE_URL = None
-
+        
         self._ITER = 0
         self._ITER_MAX = 3
         
@@ -56,19 +57,19 @@ class BrowserBase(object):
         
         if max_page:
             self._ITER_MAX = max_page
-            
+        
         self._DEFAULT_SCRAPE_METHOD = method
-        if self._DEFAULT_SCRAPE_METHOD in ['selenium-htmlunit', 'selenium-chrome',]:
+        if self._DEFAULT_SCRAPE_METHOD in ['selenium-htmlunit', 'selenium-chrome', ]:
             if driver is None:
                 self._init_browser_instance()
             else:
                 self._DRIVER = driver
         else:
             self._DRIVER = None
-
+        
         if self._DEFAULT_SCRAPE_METHOD not in self._AVAILABLE_SCRAPE_METHODS:
             raise exceptions.BrowerScrapeMethodNotImplemented('Not implemented')
-        
+    
     def _test_config(self):
         """
         this will check the inputs and executables being in place
@@ -77,7 +78,8 @@ class BrowserBase(object):
         logging.debug('testing config')
     
     def _soup_data(self):
-         return lxml.html.fromstring(self._HTML_DATA)
+        # return lxml.html.fromstring(self._HTML_DATA)
+        return BeautifulSoup(self._HTML_DATA, "lxml")
     
     def _init_browser_instance(self):
         self._DRIVER = start_browser(self._DEFAULT_SCRAPE_METHOD)
@@ -102,7 +104,7 @@ class BrowserBase(object):
         url = self.evaluate_url()
         self._DRIVER.get(url)
         return self._DRIVER.page_source
-        
+    
     def get_html_with_requests(self):
         """
         scrapes the html content using requests module
@@ -117,12 +119,12 @@ class BrowserBase(object):
                 return None
         except:
             return None
-        
+    
     def get_html(self, method=None):
         if method is None:  method = self.get_current_method()
         if method in ['selenium-htmlunit', 'selenium-chrome', ]: return self.get_html_with_selenium()
         if method == 'requests': return self.get_html_with_requests()
-        
+    
     def dry_run(self):
         """
         This will run a dry run with plain python requests, and check if requests is good enough,
@@ -145,7 +147,7 @@ class BrowserBase(object):
         :return:
         """
         index = self._AVAILABLE_SCRAPE_METHODS.index(self._DEFAULT_SCRAPE_METHOD)
-        return self._AVAILABLE_SCRAPE_METHODS[index-1]
+        return self._AVAILABLE_SCRAPE_METHODS[index - 1]
     
     def search(self):
         """
@@ -153,7 +155,7 @@ class BrowserBase(object):
          2. shift _DEFAULT_SCRAPE_METHOD if needed
          3. get results
          """
- 
+        
         self.dry_run()
         self._test_config()
         self._HTML_DATA = self.get_html()
@@ -166,28 +168,28 @@ class BrowserBase(object):
             self._ITER += 1
             time.sleep(self._PAUSE_RUN_RANDOMLY())
             self.search()
-        
+    
     @property
     def data(self):
         # make the data unique
         self._RESULTS_MAIN = [dict(y) for y in set(tuple(x.items()) for x in self._RESULTS_MAIN)]
         self._RESULTS_KEYWORDS = [dict(y) for y in set(tuple(x.items()) for x in self._RESULTS_KEYWORDS)]
         return {
-            'results': self._RESULTS_MAIN ,
+            'results': self._RESULTS_MAIN,
             'results_count': len(self._RESULTS_MAIN),
             'related_keywords': self._RESULTS_KEYWORDS,
             'related_keywords_count': len(self._RESULTS_KEYWORDS),
             'next_url': self._NEXT_PAGE_URL
         }
-
+    
     def _scrape_css_selector(self, selector=None):
-        results = self._SOUPED_HTML_DATA.cssselect(selector)
+        results = self._SOUPED_HTML_DATA.select(selector)
         data = []
         for result in results:
-            link =  result.get('href').strip() if result.get('href') else None
+            link = result.get('href').strip() if result.get('href') else None
             datum = {
                 'link': link if link.startswith('http') else self._BASE_URL + link,
-                'text': result.text_content().strip() if result.text_content() else None
+                'text': result.getText().strip() if result.getText() else None
             }
             data.append(datum)
         return data
@@ -197,16 +199,16 @@ class BrowserBase(object):
         :return:
         """
         if self._SEARCH_NEXT_CSS_SELECTOR:
-            el = self._SOUPED_HTML_DATA.cssselect(self._SEARCH_NEXT_CSS_SELECTOR)
+            el = self._SOUPED_HTML_DATA.select(self._SEARCH_NEXT_CSS_SELECTOR)
             if len(el) >= 1:
                 el = el[0]
                 href = el.get('href').strip()
-                if "http://" in href  or "https://" in href:
+                if "http://" in href or "https://" in href:
                     return href
                 return self._BASE_URL + href
         else:
             return None
-        
+    
     def get_search_results(self):
         return self._scrape_css_selector(self._SEARCH_MAIN_CSS_SELECTOR)
     
@@ -215,7 +217,7 @@ class BrowserBase(object):
             return self._scrape_css_selector(self._SEARCH_KEYWORDS_CSS_SELECTOR)
         else:
             return []
-        
+    
     def close(self):
         if self._DRIVER:
             self._DRIVER.close()

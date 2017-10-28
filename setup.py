@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='trawler',
-    version='1.2.2',
+    version='1.2.3',
     packages=['trawler', 'trawler.browsers' ],
     url='https://github.com/rrmerugu/trawler',
     license='',
@@ -15,6 +15,8 @@ setup(
         'cssselect==1.0.1',
         'lxml==4.1.0',
         'selenium==3.6.0',
-        'six==1.11.0'
+        'six==1.11.0',
+        'beautifulsoup4==4.6.0',
+        'requests'
     ],
 )
