@@ -13,6 +13,7 @@ class BrowseWordPress(BrowserBase):
         stack.data # returns the data
     
     """
+
     def __init__(self, kw=None, max_page=1, method='selenium-chrome', driver=None, base_url=None):
         super(BrowseWordPress, self).__init__(kw=kw, max_page=max_page, method=method, driver=driver)
 
