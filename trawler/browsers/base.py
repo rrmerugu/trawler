@@ -51,7 +51,7 @@ class BrowserBase(object):
         self._NEXT_PAGE_URL = None
 
         self._ITER = 0
-        self._ITER_MAX = 3
+        self._ITER_MAX = max_page
 
         self._SEARCH_TERM = kw
 
