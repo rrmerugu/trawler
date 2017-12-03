@@ -58,8 +58,6 @@ class BrowserBase(object):
         if max_page:
             self._ITER_MAX = max_page
 
-        print max_page
-
         self._DEFAULT_SCRAPE_METHOD = method
         if self._DEFAULT_SCRAPE_METHOD in ['selenium-htmlunit', 'selenium-chrome', ]:
             if driver is None:
@@ -152,10 +150,9 @@ class BrowserBase(object):
         return self._AVAILABLE_SCRAPE_METHODS[index - 1]
 
     def search(self):
-        print self._ITER_MAX, "++++++++++"
         for i in range(self._ITER_MAX):
             print(self._NEXT_PAGE_URL, self._ITER, self._ITER_MAX, "======")
-            if i == 0 or  self._NEXT_PAGE_URL:
+            if i == 0 or self._NEXT_PAGE_URL:
                 self._ITER += 1
                 time.sleep(self._PAUSE_RUN_RANDOMLY())
                 self.search_single_page(i)
@@ -174,9 +171,6 @@ class BrowserBase(object):
         self._RESULTS_MAIN += self.get_search_results()
         self._RESULTS_KEYWORDS += self.get_related_keywords()
         self._NEXT_PAGE_URL = self._get_next_page()
-        print self._ITER_MAX, "+++++++++"
-
-        # if self._NEXT_PAGE_URL and self._ITER <= self._ITER_MAX:
 
     @property
     def data(self):
