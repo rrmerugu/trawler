@@ -2,7 +2,7 @@
 import sys
 import pytest
 
-PYTEST_ARGS = ['trawler','tests', '--cov=trawler', '--tb=short', '-rw' ]
+PYTEST_ARGS = ['tests', '--cov=trawler', '--tb=short', '-rw' ]
 
 
 def exit_on_failure(command, message=None):

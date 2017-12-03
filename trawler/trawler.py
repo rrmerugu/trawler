@@ -40,7 +40,8 @@ class TrawlIt(object):
                  page_url=None,
                  generate_kws=False,
                  prefixes=_PREFIXES,
-                 suffixes=_SUFFIXES, **kwargs):
+                 suffixes=_SUFFIXES,
+                 **kwargs):
 
         self._BASE_URL = page_url
         self._KEYWORD = kw
@@ -50,6 +51,7 @@ class TrawlIt(object):
         self._MAX_PAGES = max_pages
         self._GENERATE_KWS = generate_kws
         self._GENERATED_KEYWORDS = []
+        self._OTHER_KWARGS = kwargs
         self._DATA = {
             'results': [],
             'results_count': 0,
@@ -114,20 +116,29 @@ class TrawlIt(object):
         self._DATA['search_kw_generated'] = self.generated_keywords
 
     def _run(self, kw):
+
+        source = self._OTHER_KWARGS.get('source')
+        source_kwargs = {'source': source}
         if self._DRIVER:
             browser_kwargs = {'driver': self._DRIVER}
         else:
             browser_kwargs = {}
+
+        extra_kwargs = {}
+        extra_kwargs.update(browser_kwargs)
+        if source:
+            extra_kwargs.update(source_kwargs)
         if self._BROWSER == 'bing':
-            browser = BrowseBing(kw=kw, max_page=self._MAX_PAGES, method=self._SCRAPE_METHOD, **browser_kwargs)
+            browser = BrowseBing(kw=kw, max_page=self._MAX_PAGES, method=self._SCRAPE_METHOD,
+                                 **browser_kwargs)
         elif self._BROWSER == 'stackoverflow':
-            browser = BrowseStackOverFlow(kw=kw, max_page=self._MAX_PAGES, method=self._SCRAPE_METHOD, **browser_kwargs)
+            browser = BrowseStackOverFlow(kw=kw, max_page=self._MAX_PAGES, method=self._SCRAPE_METHOD, **extra_kwargs)
         elif self._BROWSER == 'stackoverflow-doc':
             browser = BrowseStackOverFlowDocumentation(kw=kw, max_page=self._MAX_PAGES, method=self._SCRAPE_METHOD,
-                                                       **browser_kwargs)
+                                                       **extra_kwargs)
         elif self._BROWSER == 'wordpress':
             browser = BrowseWordPress(kw=kw, max_page=self._MAX_PAGES, base_url=self._BASE_URL,
-                                      method=self._SCRAPE_METHOD, **browser_kwargs)
+                                      method=self._SCRAPE_METHOD, **extra_kwargs)
 
         browser.search()
         logger.debug("Gathered the data for keyword", kw)
