@@ -9,9 +9,8 @@ def test_browse_with_bing():
     bing = BrowseBing(kw="Ravi RT Merugu", max_page=max_page)
     bing.search()
     result = bing.data
-    print result
-    assert bing.data[
-               'results_count'] <= DEFAULT_MAX_RESULTS_PER_PAGE * max_page  # not expected more than x links in a page.
+    assert bing.data['results_count'] != 0
+    assert bing.data[ 'results_count'] <= DEFAULT_MAX_RESULTS_PER_PAGE * max_page
     assert "selenium-htmlunit" == bing.shift_method()
     assert type(result) is dict
     assert "results" in result
@@ -20,14 +19,13 @@ def test_browse_with_bing():
 
 
 def test_browse_with_bing_source_enin():
-    max_page = 1
+    max_page = 2
     bing = BrowseBing(kw="Ravi RT Merugu", max_page=max_page, source="en-in")
     bing.search()
     result = bing.data
-    print result['results_count']
-    print result
-    assert bing.data[
-               'results_count'] <= DEFAULT_MAX_RESULTS_PER_PAGE * max_page  # not expected more than x links in a page.
+    print result, "+++++++++"
+    assert bing.data['results_count'] != 0
+    assert bing.data['results_count'] <= DEFAULT_MAX_RESULTS_PER_PAGE * max_page
     assert "selenium-htmlunit" == bing.shift_method()
     assert type(result) is dict
     assert "results" in result
@@ -40,8 +38,8 @@ def test_browse_with_bing_source_enus():
     bing = BrowseBing(kw="Ravi RT Merugu", max_page=max_page, source="en-us")
     bing.search()
     result = bing.data
-    assert bing.data[
-               'results_count'] <= DEFAULT_MAX_RESULTS_PER_PAGE * max_page  # not expected more than x links in a page.
+    assert bing.data['results_count'] != 0
+    assert bing.data['results_count'] <= DEFAULT_MAX_RESULTS_PER_PAGE * max_page
     assert "selenium-htmlunit" == bing.shift_method()
     assert type(result) is dict
     assert "results" in result

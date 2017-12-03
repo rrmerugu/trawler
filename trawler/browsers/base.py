@@ -8,7 +8,7 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from .utils import start_browser
 import logging
 import random, time
-from trawler.settings import AVAILABLE_METHODS
+from trawler.settings import AVAILABLE_METHODS, DEFAULT_MAX_PAGES
 
 
 class BrowserBase(object):
@@ -51,12 +51,14 @@ class BrowserBase(object):
         self._NEXT_PAGE_URL = None
 
         self._ITER = 0
-        self._ITER_MAX = max_page
+        self._ITER_MAX = DEFAULT_MAX_PAGES
 
         self._SEARCH_TERM = kw
 
         if max_page:
             self._ITER_MAX = max_page
+
+        print max_page
 
         self._DEFAULT_SCRAPE_METHOD = method
         if self._DEFAULT_SCRAPE_METHOD in ['selenium-htmlunit', 'selenium-chrome', ]:
@@ -150,6 +152,15 @@ class BrowserBase(object):
         return self._AVAILABLE_SCRAPE_METHODS[index - 1]
 
     def search(self):
+
+        for i in range(self._ITER_MAX):
+            print(self._NEXT_PAGE_URL, self._ITER, self._ITER_MAX, "======")
+            if i == 0 or  self._NEXT_PAGE_URL:
+                self._ITER += 1
+                time.sleep(self._PAUSE_RUN_RANDOMLY())
+                self.search_single_page(i)
+
+    def search_single_page(self, iter_num=0):
         """
          1. Perform a dry run
          2. shift _DEFAULT_SCRAPE_METHOD if needed
@@ -163,11 +174,9 @@ class BrowserBase(object):
         self._RESULTS_MAIN += self.get_search_results()
         self._RESULTS_KEYWORDS += self.get_related_keywords()
         self._NEXT_PAGE_URL = self._get_next_page()
+        print self._ITER_MAX, "+++++++++"
 
-        if self._NEXT_PAGE_URL and self._ITER < self._ITER_MAX:
-            self._ITER += 1
-            time.sleep(self._PAUSE_RUN_RANDOMLY())
-            self.search()
+        # if self._NEXT_PAGE_URL and self._ITER <= self._ITER_MAX:
 
     @property
     def data(self):
