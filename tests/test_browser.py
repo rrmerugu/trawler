@@ -15,7 +15,7 @@ def test_browse_with_bing():
     assert type(result) is dict
     assert "results" in result
     assert "related_keywords" in result
-    # bing.close()
+    bing.close()
 
 
 def test_browse_with_bing_source_enin():
