@@ -152,7 +152,7 @@ class BrowserBase(object):
         return self._AVAILABLE_SCRAPE_METHODS[index - 1]
 
     def search(self):
-
+        print self._ITER_MAX, "++++++++++"
         for i in range(self._ITER_MAX):
             print(self._NEXT_PAGE_URL, self._ITER, self._ITER_MAX, "======")
             if i == 0 or  self._NEXT_PAGE_URL:
