@@ -1,4 +1,4 @@
-from .base import BrowserBase
+from trawler.browsers.base import BrowserBase
 
 
 class BrowseStackOverFlow(BrowserBase):

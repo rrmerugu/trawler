@@ -1,6 +1,6 @@
-from .browsers import BrowseBing, BrowseStackOverFlow, BrowseStackOverFlowDocumentation, BrowseWordPress
-from .browsers.utils import start_browser
-from .settings import AVAILABLE_METHODS, AVAILABLE_SELENIUM_METHODS
+from trawler.browsers import BrowseBing, BrowseStackOverFlow, BrowseStackOverFlowDocumentation, BrowseWordPress
+from trawler.browsers.utils import start_browser
+from trawler.settings import AVAILABLE_METHODS, AVAILABLE_SELENIUM_METHODS
 import logging
 
 logger = logging.getLogger(__name__)

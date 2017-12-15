@@ -1,4 +1,4 @@
-from .base import BrowserBase
+from trawler.browsers.base import BrowserBase
 from trawler.settings import DEFAULT_MAX_RESULTS_PER_PAGE, DEFAULT_MAX_PAGES
 
 

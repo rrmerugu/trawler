@@ -3,9 +3,9 @@ import lxml
 import lxml.html
 from bs4 import BeautifulSoup
 import requests
-from . import exceptions
+from trawler.browsers import exceptions
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from .utils import start_browser
+from trawler.browsers.utils import start_browser
 import logging
 import random, time
 from trawler.settings import AVAILABLE_METHODS, DEFAULT_MAX_PAGES
