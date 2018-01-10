@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='trawler',
-    version='1.2.6',
+    version='1.3',
     packages=['trawler', 'tests' ],
     url='https://github.com/rrmerugu/trawler',
     license='',
