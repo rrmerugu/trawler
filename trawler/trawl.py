@@ -55,8 +55,7 @@ class TrawlIt(object):
         self._DATA = {
             'generated_keywords': [],
             'generated_keywords_data': {},
-            # 'related_keywords': [],
-            # 'related_keywords_count': 0,
+            'search_kw_generated': [],
             'search_kw': None,
             'search_kw_data': []
 

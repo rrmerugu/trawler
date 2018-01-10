@@ -7,9 +7,10 @@ def test_scout():
     trawl.run()
     result = trawl.data
     assert type(result) is dict
-    assert "results" in result
-    assert "related_keywords" in result
+    assert "generated_keywords_data" in result
+    assert "generated_keywords" in result
     assert "search_kw" in result
+    assert "search_kw_data" in result
     assert "search_kw_generated" in result
     trawl.stop()
 
