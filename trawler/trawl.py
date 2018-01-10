@@ -53,12 +53,12 @@ class TrawlIt(object):
         self._GENERATED_KEYWORDS = []
         self._OTHER_KWARGS = kwargs
         self._DATA = {
-            'results': [],
-            'results_count': 0,
-            'related_keywords': [],
-            'related_keywords_count': 0,
-            'search_kw': '',
-            'search_kw_generated': []
+            'generated_keywords': [],
+            'generated_keywords_data': {},
+            # 'related_keywords': [],
+            # 'related_keywords_count': 0,
+            'search_kw': None,
+            'search_kw_data': []
 
         }
         if prefixes: self._PREFIXES = prefixes
@@ -84,7 +84,10 @@ class TrawlIt(object):
 
     @property
     def data(self):
-        if len(self._DATA['results']) == 0:
+        self._DATA['search_kw'] = self._KEYWORD
+        self._DATA['search_kw_generated'] = self.generated_keywords
+
+        if self._DATA['search_kw_data'] is None:
             raise Exception("""Hey, either no results found or make sure you ran the code with `trawl.run()`
             
             Example:
@@ -108,12 +111,16 @@ class TrawlIt(object):
         return keywords
 
     def _append_data(self, data):
-        self._DATA['results'] += data['results']
-        self._DATA['related_keywords'] += data['related_keywords']
-        self._DATA['related_keywords_count'] += data['related_keywords_count']
-        self._DATA['results_count'] += data['results_count']
-        self._DATA['search_kw'] = self._KEYWORD
-        self._DATA['search_kw_generated'] = self.generated_keywords
+        print (self._NOW_KEYWORD, self._KEYWORD, "=======")
+        if self._NOW_KEYWORD == self._KEYWORD:
+            self._DATA['search_kw_data'] = data
+        else:
+            self._DATA['generated_keywords_data'][self._NOW_KEYWORD] = data
+        #
+        # self._DATA[self._NOW_KEYWORD]['results'] += data['results']
+        # self._DATA[self._NOW_KEYWORD]['related_keywords'] += data['related_keywords']
+        # self._DATA[self._NOW_KEYWORD]['related_keywords_count'] += data['related_keywords_count']
+        # self._DATA[self._NOW_KEYWORD]['results_count'] += data['results_count']
 
     def _run(self, kw):
 
@@ -156,8 +163,9 @@ class TrawlIt(object):
         """
         self._GENERATED_KEYWORDS = self.generated_keywords
         if self._GENERATE_KWS:
+            all_kws = list(set(self._GENERATED_KEYWORDS + [self._KEYWORD]))
             logger.debug("Generated %s keywords for [%s] " % (len(self._GENERATED_KEYWORDS), self._KEYWORD))
-            for kw in self._GENERATED_KEYWORDS:
+            for kw in all_kws:
                 self._NOW_KEYWORD = kw
                 self._run(self._NOW_KEYWORD)
         else:

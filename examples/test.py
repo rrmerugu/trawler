@@ -8,7 +8,7 @@ if __name__ == "__main__":
     bing = BrowseBing(kw="Ravi RT Merugu", max_page=max_page, source="en-in")
     bing.search()
     result = bing.data
-    print result, "+++++++++"
+    print (result, "+++++++++")
     assert bing.data['results_count'] != 0
     assert bing.data['results_count'] <= DEFAULT_MAX_RESULTS_PER_PAGE * max_page
     assert "selenium-htmlunit" == bing.shift_method()
