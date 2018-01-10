@@ -5,7 +5,7 @@ from setuptools import setup
 setup(
     name='trawler',
     version='1.3',
-    packages=['trawler', 'tests' ],
+    packages=['trawler', 'trawler.browsers', 'tests' ],
     url='https://github.com/rrmerugu/trawler',
     license='',
     author='Ravi RT Merugu',
