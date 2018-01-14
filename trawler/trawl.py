@@ -60,8 +60,8 @@ class TrawlIt(object):
             'search_kw_data': []
 
         }
-        if prefixes: self._PREFIXES = prefixes
-        if suffixes: self._SUFFIXES = suffixes
+        self._PREFIXES = prefixes if prefixes else []
+        self._SUFFIXES = suffixes if suffixes else []
 
         if self._BROWSER not in self._AVAILABLE_BROWSERS:
             raise NotImplementedError("Only [%s] search is implemented at this moment, "
@@ -110,7 +110,7 @@ class TrawlIt(object):
         return keywords
 
     def _append_data(self, data):
-        print (self._NOW_KEYWORD, self._KEYWORD, "=======")
+        print(self._NOW_KEYWORD, self._KEYWORD, "=======")
         if self._NOW_KEYWORD == self._KEYWORD:
             self._DATA['search_kw_data'] = data
         else:
