@@ -28,8 +28,8 @@ class TrawlIt(object):
 
     """
 
-    _SUFFIXES = ['tutorials', ]
-    _PREFIXES = ['learning', 'Programming with']
+    # _SUFFIXES = ['tutorials', ]
+    # _PREFIXES = ['learning', 'Programming with']
     _AVAILABLE_BROWSERS = ['bing', 'stackoverflow', 'stackoverflow-doc', ]
     _AVAILABLE_METHODS = AVAILABLE_METHODS
 
@@ -39,8 +39,8 @@ class TrawlIt(object):
                  method="selenium-chrome",
                  page_url=None,
                  generate_kws=False,
-                 prefixes=_PREFIXES,
-                 suffixes=_SUFFIXES,
+                 prefixes=None,
+                 suffixes=None,
                  **kwargs):
 
         self._BASE_URL = page_url
