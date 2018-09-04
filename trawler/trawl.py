@@ -53,11 +53,11 @@ class TrawlIt(object):
         self._GENERATED_KEYWORDS = []
         self._OTHER_KWARGS = kwargs
         self._DATA = {
-            'generated_keywords': [],
+            'generated_keywords': [], # TODO -
             'generated_keywords_data': [],
-            'search_kw_generated': [],
-            'search_kw': None,
-            'search_kw_data': []
+            'search_keyword_generated': [],
+            'search_keyword': None,
+            'search_keyword_data': []
 
         }
         self._PREFIXES = prefixes if prefixes else []
@@ -74,6 +74,7 @@ class TrawlIt(object):
 
     @property
     def generated_keywords(self):
+        # TODO - add generate keyword
         if len(self._GENERATED_KEYWORDS) == 0:
             if self._GENERATE_KWS:
                 self._GENERATED_KEYWORDS = self._generate_keywords()
@@ -83,10 +84,9 @@ class TrawlIt(object):
 
     @property
     def data(self):
-        self._DATA['search_kw'] = self._KEYWORD
-        self._DATA['search_kw_generated'] = self.generated_keywords
-
-        if self._DATA['search_kw_data'] is None:
+        self._DATA['search_keyword'] = self._KEYWORD
+        self._DATA['search_keyword_generated'] = self.generated_keywords
+        if self._DATA['search_keyword_data'] is None:
             raise Exception("""Hey, either no results found or make sure you ran the code with `trawl.run()`
             
             Example:
@@ -117,12 +117,11 @@ class TrawlIt(object):
             del data["related_keywords"]
 
         if self._NOW_KEYWORD == self._KEYWORD:
-            self._DATA['search_kw_data'] = data
+            self._DATA['search_keyword_data'] = data
         else:
             self._DATA['generated_keywords_data'].append(data)
 
-
-        # self._DATA['search_kw_data'].append(data)
+        # self._DATA['search_keyword_data'].append(data)
 
         # self._DATA[self._NOW_KEYWORD]['results'] += data['results']
         # self._DATA[self._NOW_KEYWORD]['related_keywords'] += data['related_keywords']
