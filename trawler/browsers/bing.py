@@ -44,21 +44,17 @@ class BrowseBingImages(BrowserBase):
     """
 
     def __init__(self, kw=None, max_page=DEFAULT_MAX_PAGES, method='selenium-chrome', driver=None, **kwargs):
-        SOURCE = kwargs.get('source', '')
-        RESULTS_PER_PAGE = kwargs.get('pp', DEFAULT_MAX_RESULTS_PER_PAGE)
         super(BrowseBingImages, self).__init__(kw=kw, max_page=max_page, method=method, driver=driver)
 
     def _get_image_results(self):
-        images_list = []  # contains the link for Large original images, type of  image
+        images_list = []
         for i in range(self._ITER_MAX):
             url = "http://www.bing.com/images/search?q=" + self._SEARCH_TERM \
                   + "&FORM=HDRSC2&first={}&count=35&relp=35".format(i * 35)
-            print(url)
             html = self.get_html(method=self._DEFAULT_SCRAPE_METHOD, url=url)
             soup = self._soup_data(html=html)
 
             for a in soup.find_all("a", {"class": "iusc"}):
-                # print a
                 mad = json.loads(a["mad"])
                 source_url = mad["turl"]
                 m = json.loads(a["m"])
@@ -71,7 +67,6 @@ class BrowseBingImages(BrowserBase):
                     "source_url": source_url
                 }
                 images_list.append(image_data)
-        print(images_list)
         return images_list
 
     def get_image_results(self):
