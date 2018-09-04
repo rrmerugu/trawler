@@ -6,9 +6,10 @@ sys.path.append('../')
 from trawler.trawl import TrawlIt, BrowseBingKeywords
 
 if __name__ == "__main__":
-    max_page = 5
     bing = BrowseBingKeywords(kw="machine learning",
                               method="requests",
+                              extra_depth=True,
+                              max_page=1,
                               )
     bing.run()
     result = bing.data

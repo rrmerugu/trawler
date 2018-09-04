@@ -98,18 +98,20 @@ class BrowseBingKeywords(BrowserBase):
 
     """
 
-    def __init__(self, kw=None, language="en-Us", depth=1,
+    def __init__(self, kw=None, language="en-Us", extra_depth=False,
                  max_page=DEFAULT_MAX_PAGES, method='selenium-chrome', driver=None, **kwargs):
         self._DATA = []
-        self._DEPTH = depth
+        self._EXTRA_DEPTH = extra_depth
         self.language = language
         super(BrowseBingKeywords, self).__init__(kw=kw, max_page=max_page, method=method, driver=driver)
 
-    def _get_keywords(self):
+    def _get_keywords(self, keyword=None):
+        if keyword is None:
+            keyword = self._SEARCH_TERM
         keywords_list = []
         for i in range(self._ITER_MAX):
             url = "https://www.bing.com/AS/Suggestions?mkt={}&qry={}&cvid={}".format(self.language,
-                                                                                     self._SEARCH_TERM,
+                                                                                     keyword,
                                                                                      str(random.randint(123,
                                                                                                         21323123))
                                                                                      )
@@ -127,15 +129,27 @@ class BrowseBingKeywords(BrowserBase):
             return keywords_list
         return keywords_list
 
+    def get_keywords(self, keyword=None):
+        keywords_data = self._get_keywords(keyword=keyword)
+        data = {}
+        data['result'] = keywords_data
+        data['result_count'] = len(keywords_data)
+        data['keyword'] = self._SEARCH_TERM
+        data['crawled_at'] = datetime.now()
+        return data
+
     def run(self):
-        self._DATA = self._get_keywords()
+        data = self.get_keywords()
+        if self._EXTRA_DEPTH:
+            generated_keywords = []
+            for keyword in data['result']:
+                d = self.get_keywords(keyword=keyword)
+                d['keyword'] = keyword
+                generated_keywords.append(d)
+            data['extra_depth_data'] = generated_keywords
+        self._DATA = data
 
     @property
     def data(self):
-        images_result = self._DATA
-        data = {}
-        data['result'] = images_result
-        data['result_count'] = len(images_result)
-        data['keyword'] = self._SEARCH_TERM
-        data['crawled_at'] = datetime.now()
+        data = self._DATA
         return data

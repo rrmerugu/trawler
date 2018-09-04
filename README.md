@@ -75,7 +75,15 @@ stack.data # returns the data
 
 Current this framework supports, automating searches with 
 
-- bing
+- Bing
+- Bing Images
+- Bing Keywords
 - StackOverFlow
 - StackOverFlow Documentation
 - Wordpress
+
+
+## Important Note
+
+Please understand https://advertise.bingads.microsoft.com/en-in/resources/policies/web-crawling before using this
+framework. Make sure you comply with the respective website privacy policies before you crawl them.
