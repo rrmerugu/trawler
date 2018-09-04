@@ -9,6 +9,7 @@ from trawler.browsers.utils import start_browser
 import logging
 import random, time
 from trawler.settings import AVAILABLE_METHODS, DEFAULT_MAX_PAGES
+logging.getLogger(__name__)
 
 
 class BrowserBase(object):
@@ -151,7 +152,7 @@ class BrowserBase(object):
 
     def search(self):
         for i in range(self._ITER_MAX):
-            print(self._NEXT_PAGE_URL, self._ITER, self._ITER_MAX, "======")
+            logging.debug(self._NEXT_PAGE_URL, self._ITER, self._ITER_MAX, "======")
             if i == 0 or self._NEXT_PAGE_URL:
                 self._ITER += 1
                 time.sleep(self._PAUSE_RUN_RANDOMLY())
@@ -181,7 +182,6 @@ class BrowserBase(object):
             'results': self._RESULTS_MAIN,
             'results_count': len(self._RESULTS_MAIN),
             'related_keywords': self._RESULTS_KEYWORDS,
-            'related_keywords_count': len(self._RESULTS_KEYWORDS),
             'next_url': self._NEXT_PAGE_URL
         }
 

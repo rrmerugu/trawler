@@ -5,3 +5,4 @@ trawler.egg-info
 htmlcov/
 .cache
 dist
+examples/data.json

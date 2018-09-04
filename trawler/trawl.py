@@ -54,7 +54,7 @@ class TrawlIt(object):
         self._OTHER_KWARGS = kwargs
         self._DATA = {
             'generated_keywords': [],
-            'generated_keywords_data': {},
+            'generated_keywords_data': [],
             'search_kw_generated': [],
             'search_kw': None,
             'search_kw_data': []
@@ -95,6 +95,8 @@ class TrawlIt(object):
                 trawl.data # you can access the data here
                 trawl.stop() # this close the browser instance
             """)
+
+        print(self._DATA)
         return self._DATA
 
     def _init_browser_instance(self):
@@ -110,12 +112,18 @@ class TrawlIt(object):
         return keywords
 
     def _append_data(self, data):
-        print(self._NOW_KEYWORD, self._KEYWORD, "=======")
+        data['keyword'] = self._NOW_KEYWORD
+        if "related_keywords" in data.keys():
+            del data["related_keywords"]
+
         if self._NOW_KEYWORD == self._KEYWORD:
             self._DATA['search_kw_data'] = data
         else:
-            self._DATA['generated_keywords_data'][self._NOW_KEYWORD] = data
-        #
+            self._DATA['generated_keywords_data'].append(data)
+
+
+        # self._DATA['search_kw_data'].append(data)
+
         # self._DATA[self._NOW_KEYWORD]['results'] += data['results']
         # self._DATA[self._NOW_KEYWORD]['related_keywords'] += data['related_keywords']
         # self._DATA[self._NOW_KEYWORD]['related_keywords_count'] += data['related_keywords_count']
