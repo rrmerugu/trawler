@@ -1,5 +1,5 @@
 from trawler.browsers import BrowseBing, BrowseBingImages, BrowseStackOverFlow, BrowseStackOverFlowDocumentation, \
-    BrowseWordPress
+    BrowseWordPress, BrowseBingKeywords
 from trawler.browsers.utils import start_browser
 from trawler.settings import AVAILABLE_METHODS, AVAILABLE_SELENIUM_METHODS
 import logging

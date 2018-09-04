@@ -3,6 +3,7 @@ from trawler.settings import DEFAULT_MAX_RESULTS_PER_PAGE, DEFAULT_MAX_PAGES
 import json
 import urllib
 from datetime import datetime
+import random
 
 
 class BrowseBing(BrowserBase):
@@ -39,7 +40,7 @@ class BrowseBingImages(BrowserBase):
     Usage:
         from trawler.browsers.bing import BrowseBingImages
         bing = BrowseBingImages(kw="invaana", max_page=3)
-        bing.search()
+        bing.run()
         bing.data # returns the data
 
     """
@@ -73,6 +74,61 @@ class BrowseBingImages(BrowserBase):
 
     def run(self):
         self._DATA = self._get_image_results()
+
+    @property
+    def data(self):
+        images_result = self._DATA
+        data = {}
+        data['result'] = images_result
+        data['result_count'] = len(images_result)
+        data['keyword'] = self._SEARCH_TERM
+        data['crawled_at'] = datetime.now()
+        return data
+
+
+class BrowseBingKeywords(BrowserBase):
+    """
+    Does the browsing tasks on bing.com
+
+    Usage:
+        from trawler.browsers.bing import BrowseBingKeywords
+        bing = BrowseBingKeywords(kw="invaana", depth=1)
+        bing.run()
+        bing.data # returns the data
+
+    """
+
+    def __init__(self, kw=None, language="en-Us", depth=1,
+                 max_page=DEFAULT_MAX_PAGES, method='selenium-chrome', driver=None, **kwargs):
+        self._DATA = []
+        self._DEPTH = depth
+        self.language = language
+        super(BrowseBingKeywords, self).__init__(kw=kw, max_page=max_page, method=method, driver=driver)
+
+    def _get_keywords(self):
+        keywords_list = []
+        for i in range(self._ITER_MAX):
+            url = "https://www.bing.com/AS/Suggestions?mkt={}&qry={}&cvid={}".format(self.language,
+                                                                                     self._SEARCH_TERM,
+                                                                                     str(random.randint(123,
+                                                                                                        21323123))
+                                                                                     )
+            html = self.get_html(method=self._DEFAULT_SCRAPE_METHOD, url=url)
+            soup = self._soup_data(html=html)
+            try:
+                section = soup.find('ul', attrs={'class': 'sa_drw'})
+                elements = section.findAll('li', {'class': 'sa_sg'})
+                for element in elements:
+                    query = element['query']
+                    if (len(query) != 0) and query != self._SEARCH_TERM:
+                        keywords_list.append(query)
+            except Exception as e:
+                print(e)
+            return keywords_list
+        return keywords_list
+
+    def run(self):
+        self._DATA = self._get_keywords()
 
     @property
     def data(self):
