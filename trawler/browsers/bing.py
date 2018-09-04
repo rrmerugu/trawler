@@ -2,6 +2,7 @@ from trawler.browsers.base import BrowserBase
 from trawler.settings import DEFAULT_MAX_RESULTS_PER_PAGE, DEFAULT_MAX_PAGES
 import json
 import urllib
+from datetime import datetime
 
 
 class BrowseBing(BrowserBase):
@@ -36,14 +37,15 @@ class BrowseBingImages(BrowserBase):
     Does the browsing tasks on bing.com
 
     Usage:
-        from trawler.browsers.bing import BrowseBing
-        bing = BrowseBing(kw="invaana", max_page=3, source="en-us")
+        from trawler.browsers.bing import BrowseBingImages
+        bing = BrowseBingImages(kw="invaana", max_page=3)
         bing.search()
         bing.data # returns the data
 
     """
 
     def __init__(self, kw=None, max_page=DEFAULT_MAX_PAGES, method='selenium-chrome', driver=None, **kwargs):
+        self._DATA = []
         super(BrowseBingImages, self).__init__(kw=kw, max_page=max_page, method=method, driver=driver)
 
     def _get_image_results(self):
@@ -53,7 +55,7 @@ class BrowseBingImages(BrowserBase):
                   + "&FORM=HDRSC2&first={}&count=35&relp=35".format(i * 35)
             html = self.get_html(method=self._DEFAULT_SCRAPE_METHOD, url=url)
             soup = self._soup_data(html=html)
-
+            print(url)
             for a in soup.find_all("a", {"class": "iusc"}):
                 mad = json.loads(a["mad"])
                 source_url = mad["turl"]
@@ -69,13 +71,15 @@ class BrowseBingImages(BrowserBase):
                 images_list.append(image_data)
         return images_list
 
-    def get_image_results(self):
-        return self._get_image_results()
+    def run(self):
+        self._DATA = self._get_image_results()
 
     @property
     def data(self):
-        images_result = self.get_image_results()
+        images_result = self._DATA
         data = {}
-        data['webimage_result'] = images_result
-        data['webimage_result_count'] = len(images_result)
+        data['result'] = images_result
+        data['result_count'] = len(images_result)
+        data['keyword'] = self._SEARCH_TERM
+        data['crawled_at'] = datetime.now()
         return data

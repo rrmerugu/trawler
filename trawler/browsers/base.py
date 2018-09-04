@@ -1,17 +1,12 @@
-import selenium.webdriver as webdriver
-import lxml
-import lxml.html
-import json
 from bs4 import BeautifulSoup
 import requests
 from trawler.browsers import exceptions
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from trawler.browsers.utils import start_browser
 import logging
 import random, time
 from trawler.settings import AVAILABLE_METHODS, DEFAULT_MAX_PAGES
-import urllib
 from user_agent import generate_user_agent
+from datetime import datetime
 
 logging.getLogger(__name__)
 
@@ -197,7 +192,9 @@ class BrowserBase(object):
             'webpage_result_count': len(self._RESULTS_MAIN),
 
             'related_keywords': self._RESULTS_KEYWORDS,
-            'next_url': self._NEXT_PAGE_URL
+            'next_url': self._NEXT_PAGE_URL,
+            'crawled_at': datetime.now()
+
         }
         return data
 
