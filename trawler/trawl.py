@@ -53,9 +53,8 @@ class TrawlIt(object):
         self._GENERATED_KEYWORDS = []
         self._OTHER_KWARGS = kwargs
         self._DATA = {
-            'generated_keywords': [], # TODO -
             'generated_keywords_data': [],
-            'search_keyword_generated': [],
+            'generated_keywords': [],
             'search_keyword': None,
             'search_keyword_data': []
 
@@ -85,7 +84,7 @@ class TrawlIt(object):
     @property
     def data(self):
         self._DATA['search_keyword'] = self._KEYWORD
-        self._DATA['search_keyword_generated'] = self.generated_keywords
+        self._DATA['generated_keywords'] = self.generated_keywords
         if self._DATA['search_keyword_data'] is None:
             raise Exception("""Hey, either no results found or make sure you ran the code with `trawl.run()`
             
@@ -96,7 +95,6 @@ class TrawlIt(object):
                 trawl.stop() # this close the browser instance
             """)
 
-        print(self._DATA)
         return self._DATA
 
     def _init_browser_instance(self):

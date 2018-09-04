@@ -17,6 +17,7 @@ setup(
         'selenium==3.6.0',
         'six==1.11.0',
         'beautifulsoup4==4.6.0',
-        'requests==2.18.4'
+        'requests==2.18.4',
+        'user-agent==0.1.9'
     ],
 )

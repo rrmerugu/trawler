@@ -4,3 +4,4 @@ selenium==3.6.0
 six==1.11.0
 beautifulsoup4==4.6.0
 requests
+user-agent-0.1.9
