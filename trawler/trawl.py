@@ -1,4 +1,5 @@
-from trawler.browsers import BrowseBing, BrowseStackOverFlow, BrowseStackOverFlowDocumentation, BrowseWordPress
+from trawler.browsers import BrowseBing, BrowseBingImages, BrowseStackOverFlow, BrowseStackOverFlowDocumentation, \
+    BrowseWordPress
 from trawler.browsers.utils import start_browser
 from trawler.settings import AVAILABLE_METHODS, AVAILABLE_SELENIUM_METHODS
 import logging
@@ -30,7 +31,7 @@ class TrawlIt(object):
 
     # _SUFFIXES = ['tutorials', ]
     # _PREFIXES = ['learning', 'Programming with']
-    _AVAILABLE_BROWSERS = ['bing', 'stackoverflow', 'stackoverflow-doc', ]
+    _AVAILABLE_BROWSERS = ['bing', 'bing-images','stackoverflow', 'stackoverflow-doc', ]
     _AVAILABLE_METHODS = AVAILABLE_METHODS
 
     def __init__(self, kw=None,
@@ -142,6 +143,9 @@ class TrawlIt(object):
         if self._BROWSER == 'bing':
             browser = BrowseBing(kw=kw, max_page=self._MAX_PAGES, method=self._SCRAPE_METHOD,
                                  **browser_kwargs)
+        elif self._BROWSER == 'bing-images':
+            browser = BrowseBingImages(kw=kw, max_page=self._MAX_PAGES, method=self._SCRAPE_METHOD,
+                                       **browser_kwargs)
         elif self._BROWSER == 'stackoverflow':
             browser = BrowseStackOverFlow(kw=kw, max_page=self._MAX_PAGES, method=self._SCRAPE_METHOD, **extra_kwargs)
         elif self._BROWSER == 'stackoverflow-doc':
@@ -165,15 +169,18 @@ class TrawlIt(object):
         :return:
 
         """
-        self._GENERATED_KEYWORDS = self.generated_keywords
-        if self._GENERATE_KWS:
-            all_kws = list(set(self._GENERATED_KEYWORDS + [self._KEYWORD]))
-            logger.debug("Generated %s keywords for [%s] " % (len(self._GENERATED_KEYWORDS), self._KEYWORD))
-            for kw in all_kws:
-                self._NOW_KEYWORD = kw
-                self._run(self._NOW_KEYWORD)
-        else:
+        if self._BROWSER == "bing-images":
             self._run(self._NOW_KEYWORD)
+        else:
+            self._GENERATED_KEYWORDS = self.generated_keywords
+            if self._GENERATE_KWS:
+                all_kws = list(set(self._GENERATED_KEYWORDS + [self._KEYWORD]))
+                logger.debug("Generated %s keywords for [%s] " % (len(self._GENERATED_KEYWORDS), self._KEYWORD))
+                for kw in all_kws:
+                    self._NOW_KEYWORD = kw
+                    self._run(self._NOW_KEYWORD)
+            else:
+                self._run(self._NOW_KEYWORD)
 
     def stop(self):
         if self._DRIVER:

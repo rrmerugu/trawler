@@ -6,3 +6,4 @@ htmlcov/
 .cache
 dist
 examples/data.json
+examples/images_data.json

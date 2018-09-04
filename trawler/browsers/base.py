@@ -191,15 +191,15 @@ class BrowserBase(object):
         # make the data unique
         self._RESULTS_MAIN = [dict(y) for y in set(tuple(x.items()) for x in self._RESULTS_MAIN)]
         self._RESULTS_KEYWORDS = [dict(y) for y in set(tuple(x.items()) for x in self._RESULTS_KEYWORDS)]
-        images_result = self.get_image_results()
-        return {
+
+        data = {
             'webpage_result': self._RESULTS_MAIN,
             'webpage_result_count': len(self._RESULTS_MAIN),
-            'webimage_result': images_result,
-            'webimage_result_count': len(images_result),
+
             'related_keywords': self._RESULTS_KEYWORDS,
             'next_url': self._NEXT_PAGE_URL
         }
+        return data
 
     def _scrape_css_selector(self, selector=None):
         results = self._SOUPED_HTML_DATA.select(selector)
@@ -230,33 +230,6 @@ class BrowserBase(object):
 
     def get_search_results(self):
         return self._scrape_css_selector(self._SEARCH_MAIN_CSS_SELECTOR)
-
-    def _get_image_results(self):
-        url = "http://www.bing.com/images/search?q=" + self._SEARCH_TERM + "&FORM=HDRSC2"
-        print(url)
-        html = self.get_html(method=self._DEFAULT_SCRAPE_METHOD, url=url)
-        soup = self._soup_data(html=html)
-
-        images_list = []  # contains the link for Large original images, type of  image
-        for a in soup.find_all("a", {"class": "iusc"}):
-            # print a
-            mad = json.loads(a["mad"])
-            source_url = mad["turl"]
-            m = json.loads(a["m"])
-            image_url = m["murl"]
-
-            image_name = urllib.parse.urlsplit(image_url).path.split("/")[-1]
-            image_data = {
-                "url": image_url,
-                "title": image_name,
-                "source_url": source_url
-            }
-            images_list.append(image_data)
-        print(images_list)
-        return images_list
-
-    def get_image_results(self):
-        return self._get_image_results()
 
     def get_related_keywords(self):
         if self._SEARCH_KEYWORDS_CSS_SELECTOR:
