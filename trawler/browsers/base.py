@@ -188,8 +188,8 @@ class BrowserBase(object):
         self._RESULTS_KEYWORDS = [dict(y) for y in set(tuple(x.items()) for x in self._RESULTS_KEYWORDS)]
 
         data = {
-            'webpage_result': self._RESULTS_MAIN,
-            'webpage_result_count': len(self._RESULTS_MAIN),
+            'result': self._RESULTS_MAIN,
+            'result_count': len(self._RESULTS_MAIN),
 
             'related_keywords': self._RESULTS_KEYWORDS,
             'next_url': self._NEXT_PAGE_URL,
