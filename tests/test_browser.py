@@ -9,11 +9,11 @@ def test_browse_with_bing():
     bing = BrowseBing(kw="Ravi RT Merugu", max_page=max_page)
     bing.search()
     result = bing.data
-    assert bing.data['results_count'] != 0
-    assert bing.data[ 'results_count'] <= DEFAULT_MAX_RESULTS_PER_PAGE * max_page
+    assert bing.data['result_count'] != 0
+    assert bing.data[ 'result_count'] <= DEFAULT_MAX_RESULTS_PER_PAGE * max_page
     assert "selenium-htmlunit" == bing.shift_method()
     assert type(result) is dict
-    assert "results" in result
+    assert "result" in result
     assert "related_keywords" in result
     bing.close()
 
@@ -23,11 +23,11 @@ def test_browse_with_bing_source_enin():
     bing = BrowseBing(kw="Ravi RT Merugu", max_page=max_page, source="en-in")
     bing.search()
     result = bing.data
-    assert bing.data['results_count'] != 0
-    assert bing.data['results_count'] <= DEFAULT_MAX_RESULTS_PER_PAGE * max_page
+    assert bing.data['result_count'] != 0
+    assert bing.data['result_count'] <= DEFAULT_MAX_RESULTS_PER_PAGE * max_page
     assert "selenium-htmlunit" == bing.shift_method()
     assert type(result) is dict
-    assert "results" in result
+    assert "result" in result
     assert "related_keywords" in result
     bing.close()
 
@@ -37,11 +37,11 @@ def test_browse_with_bing_source_enus():
     bing = BrowseBing(kw="Ravi RT Merugu", max_page=max_page, source="en-us")
     bing.search()
     result = bing.data
-    assert bing.data['results_count'] != 0
-    assert bing.data['results_count'] <= DEFAULT_MAX_RESULTS_PER_PAGE * max_page
+    assert bing.data['result_count'] != 0
+    assert bing.data['result_count'] <= DEFAULT_MAX_RESULTS_PER_PAGE * max_page
     assert "selenium-htmlunit" == bing.shift_method()
     assert type(result) is dict
-    assert "results" in result
+    assert "result" in result
     assert "related_keywords" in result
     bing.close()
 
@@ -52,19 +52,9 @@ def test_browser_with_stackoverflow():
     stack.search()
     result = stack.data
     assert type(result) is dict
-    assert "results" in result
+    assert "result" in result
     assert "related_keywords" in result
     stack.close()
-
-
-def test_browser_with_stackoverflow_doc():
-    doc = BrowseStackOverFlowDocumentation(kw="django")
-    doc.search()
-    result = doc.data
-    assert type(result) is dict
-    assert "results" in result
-    assert "related_keywords" in result
-    doc.close()
 
 
 def test_browser_no_nextpage():

@@ -8,7 +8,7 @@ def test_browse_with_bing():
     bing.search()
     result = bing.data
     assert type(result) is dict
-    assert "results" in result
+    assert "result" in result
     assert "related_keywords" in result
     bing.close()
 
@@ -18,7 +18,7 @@ def test_browse_with_bing_source_in():
     bing.search()
     result = bing.data
     assert type(result) is dict
-    assert "results" in result
+    assert "result" in result
     assert "related_keywords" in result
     bing.close()
 
@@ -28,7 +28,7 @@ def test_browse_with_bing_source_us():
     bing.search()
     result = bing.data
     assert type(result) is dict
-    assert "results" in result
+    assert "result" in result
     assert "related_keywords" in result
     bing.close()
 
@@ -38,16 +38,8 @@ def test_browser_with_stackoverflow():
     stack.search()
     result = stack.data
     assert type(result) is dict
-    assert "results" in result
+    assert "result" in result
     assert "related_keywords" in result
     stack.close()
 
 
-def test_browser_with_stackoverflow_doc():
-    doc = BrowseStackOverFlowDocumentation(kw="django", method="requests")
-    doc.search()
-    result = doc.data
-    assert type(result) is dict
-    assert "results" in result
-    assert "related_keywords" in result
-    doc.close()

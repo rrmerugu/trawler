@@ -5,6 +5,7 @@ trawler.egg-info
 htmlcov/
 .cache
 dist
+.idea/vcs.xml
 examples/data.json
 examples/images_data.json
 examples/images_keywords.json

@@ -1,7 +1,6 @@
-cssselect==1.0.1
-lxml==4.1.0
-selenium==3.6.0
-six==1.11.0
-beautifulsoup4==4.6.0
+lxml
+selenium
+six
+beautifulsoup4
 requests
-user-agent-0.1.9
+user_agent

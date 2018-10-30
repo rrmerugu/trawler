@@ -9,9 +9,8 @@ def test_scout():
     assert type(result) is dict
     assert "generated_keywords_data" in result
     assert "generated_keywords" in result
-    assert "search_kw" in result
-    assert "search_kw_data" in result
-    assert "search_kw_generated" in result
+    assert "search_keyword_data" in result
+    assert "search_keyword" in result
     trawl.stop()
 
 
