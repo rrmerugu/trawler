@@ -1,5 +1,5 @@
 pytest==3.1.1
 tox-travis
 pytest-cov==2.2.1
-codecov==2.0.9
+codecov==2.0.16
 coverage
